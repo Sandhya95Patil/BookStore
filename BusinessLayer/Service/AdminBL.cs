@@ -1,0 +1,33 @@
+﻿using BusinessLayer.Interface;
+using CommonLayer.ResponseModel;
+using CommonLayer.ShowModel;
+using RepositoryLayer.Interface;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessLayer.Service
+{
+    public class AdminBL : IAdminBL
+    {
+        IAdminRL adminRL;
+        public AdminBL(IAdminRL adminRL)
+        {
+            this.adminRL = adminRL;
+        }
+
+        public Task<AdminResponseModel> AdminSignUp(AdminShowModel adminShowModel)
+        {
+            try
+            {
+                var response = this.adminRL.AdminSignUp(adminShowModel);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+    }
+}
