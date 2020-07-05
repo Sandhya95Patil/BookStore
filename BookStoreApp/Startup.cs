@@ -74,7 +74,6 @@ namespace BookStoreApp
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    //ClockSkew = TimeSpan.Zero
                 };
             });
             ////End for token

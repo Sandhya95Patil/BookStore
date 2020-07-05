@@ -24,7 +24,7 @@ namespace RepositoryLayer.Service
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@Book_Title", bookShowModel.BooKTitle));
-                paramList.Add(new StoredProcedureParameterData("@Author", bookShowModel.BooKTitle));
+                paramList.Add(new StoredProcedureParameterData("@Author", bookShowModel.Author));
                 paramList.Add(new StoredProcedureParameterData("@Language", bookShowModel.Language));
                 paramList.Add(new StoredProcedureParameterData("@Category", bookShowModel.Category));
                 paramList.Add(new StoredProcedureParameterData("@ISBN_No", bookShowModel.ISBN));
@@ -54,6 +54,47 @@ namespace RepositoryLayer.Service
             catch (Exception exception)
             {
                 throw new Exception(exception.Message);
+            }
+        }
+
+        public async Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel)
+        {
+            try
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+                paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchBookModel.SearchBook));
+              
+                DataTable table = await databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
+                var bookData = new BookAddModel();
+                List<BookAddModel> bookList = new List<BookAddModel>();
+                foreach (DataRow dataRow in table.Rows)
+                {
+                    bookData = new BookAddModel();
+                    bookData.Id = (int)dataRow["Id"];
+                    bookData.BooKTitle = dataRow["Book_Title"].ToString();
+                    bookData.Author = dataRow["Author"].ToString();
+                    bookData.Language = dataRow["Language"].ToString();
+                    bookData.Category = dataRow["Category"].ToString();
+                    bookData.ISBN = Convert.ToInt32(dataRow["ISBN_No"]);
+                    bookData.Price = Convert.ToInt32(dataRow["Price"]);
+                    bookData.Pages = Convert.ToInt32(dataRow["Pages"]);
+                    bookData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
+                    bookData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
+                    bookList.Add(bookData);
+                }
+                if (bookList != null)
+                {
+                    return bookList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
     }

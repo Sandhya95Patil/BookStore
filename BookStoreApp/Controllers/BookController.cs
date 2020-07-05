@@ -42,5 +42,27 @@ namespace BookStoreApp.Controllers
                 return BadRequest(new { message = exception.Message });
             }
         }
+
+        [HttpGet]
+        [Route("Search")]
+        public async Task<IActionResult> SearchBook(SearchBookModel searchBookModel)
+        {
+            try
+            {
+                var data = await this.bookBL.SearchBook(searchBookModel);
+                if (data.Count != 0)
+                {
+                    return this.Ok(new { status = "True", message = "Search Books", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
     }
 }

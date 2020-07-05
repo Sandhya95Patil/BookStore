@@ -28,5 +28,19 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
+
+        public Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel)
+        {
+            try
+            {
+               return  this.bookRL.SearchBook(searchBookModel);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+
     }
 }
