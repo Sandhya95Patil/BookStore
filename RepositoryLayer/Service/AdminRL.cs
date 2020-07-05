@@ -1,12 +1,16 @@
-﻿using CommonLayer.ResponseModel;
+﻿using CommonLayer.Model;
+using CommonLayer.ResponseModel;
 using CommonLayer.ShowModel;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.EncryptedPassword;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -128,6 +132,84 @@ namespace RepositoryLayer.Service
             catch (Exception exception)
             {
                 throw new Exception(exception.Message);
+            }
+        }
+
+        public async Task<AdminLoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        {
+            try
+            {
+                var password = PasswordEncrypt.Encryptdata(adminLoginShowModel.Password);
+
+                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+                paramList.Add(new StoredProcedureParameterData("@Email", adminLoginShowModel.Email));
+                paramList.Add(new StoredProcedureParameterData("@Password", password));
+                paramList.Add(new StoredProcedureParameterData("@UserRole", adminLoginShowModel.UserRole));
+                DataTable table = await StoredProcedureExecuteReader("AdminLogin", paramList);
+                var userData = new AdminModel();
+                foreach (DataRow dataRow in table.Rows)
+                {
+                    userData = new AdminModel();
+                    userData.Id = (int)dataRow["Id"];
+                    userData.FirstName = dataRow["FirstName"].ToString();
+                    userData.LastName = dataRow["LastName"].ToString();
+                    userData.Email = dataRow["Email"].ToString();
+                    userData.Password = dataRow["Password"].ToString();
+                    userData.IsActive = Convert.ToBoolean(dataRow["IsActive"]);
+                    userData.UserRole = dataRow["UserRole"].ToString();
+                    userData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
+                    userData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
+                }
+
+                if (userData.Email != null)
+                {
+                    if (password.Equals(userData.Password))
+                    {
+                        ////Here generate encrypted key and result store in security key
+                        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:token"]));
+
+                        //// here using securitykey and algorithm(security) the credentials is generate(SigningCredentials present in Token)
+                        var creadintials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                        var claims = new[] {
+                         new Claim ("Id", userData.Id.ToString()),
+                         new Claim("Email", userData.Email.ToString()),
+                         new Claim("Password", userData.Password.ToString()),
+                        };
+
+                        var token = new JwtSecurityToken("Security token", "https://Test.com",
+                            claims,
+                            DateTime.UtcNow,
+                            expires: DateTime.Now.AddDays(1),
+                            signingCredentials: creadintials);
+                        var returnToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+                        var responseShow = new AdminLoginResponseModel()
+                        {
+                            Id = userData.Id,
+                            FirstName = userData.FirstName,
+                            LastName = userData.LastName,
+                            Email = userData.Email,
+                            IsActive = userData.IsActive,
+                            UserRole = userData.UserRole,
+                            CreatedDate = userData.CreatedDate,
+                            ModifiedDate = userData.ModifiedDate,
+                            Token = returnToken
+                        };
+                        return responseShow;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Email or Passord is Not Correct");
             }
         }
     }

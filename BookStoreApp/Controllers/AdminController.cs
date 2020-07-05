@@ -21,7 +21,7 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        public async Task<IActionResult> UserSignUp(AdminShowModel adminShowModel)
+        public async Task<IActionResult> AdminSignUp(AdminShowModel adminShowModel)
         {
             try
             {
@@ -39,7 +39,28 @@ namespace BookStoreApp.Controllers
             {
                 return BadRequest(new { message = exception.Message });
             }
-        
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        {
+            try
+            {
+                var data = await this.adminBL.AdminLogin(adminLoginShowModel);
+                if (data != null)
+                {
+                    return this.Ok(new { status = "True", message = "Login Successfully", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Failed To Login" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
         }
     }
 }

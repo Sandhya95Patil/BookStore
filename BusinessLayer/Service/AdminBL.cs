@@ -29,5 +29,18 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
+
+        public Task<AdminLoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        {
+            try
+            {
+                var response = this.adminRL.AdminLogin(adminLoginShowModel);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
     }
 }
