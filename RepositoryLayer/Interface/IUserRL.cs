@@ -11,6 +11,7 @@ namespace RepositoryLayer.Interface
     public interface IUserRL
     {
         Task<ResponseModel> UserSignUp(ShowModel adminShowModel);
+        Task<LoginResponseModel> UserLogin(LoginShowModel adminLoginShowModel);
 
     }
 }

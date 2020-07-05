@@ -70,7 +70,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<LoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        public async Task<LoginResponseModel> AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {

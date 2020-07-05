@@ -30,7 +30,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<LoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        public Task<LoginResponseModel> AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {

@@ -17,11 +17,24 @@ namespace BusinessLayer.Service
         {
             this.userRL = userRL;
         }
+
         public Task<ResponseModel> UserSignUp(ShowModel adminShowModel)
         {
             try
             {
                 var response = this.userRL.UserSignUp(adminShowModel);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+        public Task<LoginResponseModel> UserLogin(LoginShowModel loginShowModel)
+        {
+            try
+            {
+                var response = this.userRL.UserLogin(loginShowModel);
                 return response;
             }
             catch (Exception exception)

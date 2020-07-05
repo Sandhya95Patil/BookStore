@@ -43,5 +43,30 @@ namespace BookStoreApp.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UserLogin(LoginShowModel loginShowModel)
+        {
+            try
+            {
+                var data = await this.userBL.UserLogin(loginShowModel);
+                if (data != null)
+                {
+                    return this.Ok(new { status = "True", message = "Login Successfully", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Failed To Login" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
+
+
+
     }
 }

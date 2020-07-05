@@ -10,6 +10,6 @@ namespace RepositoryLayer.Interface
     public interface IAdminRL
     {
         Task<ResponseModel> AdminSignUp(ShowModel adminShowModel);
-        Task<LoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel);
+        Task<LoginResponseModel> AdminLogin(LoginShowModel adminLoginShowModel);
     }
 }
