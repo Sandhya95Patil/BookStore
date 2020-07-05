@@ -11,6 +11,7 @@ namespace RepositoryLayer.Interface
     {
         Task<BookAddModel> AddBook(BookShowModel bookShowModel);
         Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel);
+        Task<List<BookAddModel>> GetAllBooks();
 
     }
 }

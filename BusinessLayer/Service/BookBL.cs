@@ -42,5 +42,17 @@ namespace BusinessLayer.Service
         }
 
 
+        public Task<List<BookAddModel>> GetAllBooks()
+        {
+            try
+            {
+                return this.bookRL.GetAllBooks();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
     }
 }

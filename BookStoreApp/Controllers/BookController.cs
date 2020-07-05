@@ -45,6 +45,7 @@ namespace BookStoreApp.Controllers
 
         [HttpGet]
         [Route("Search")]
+        [AllowAnonymous]
         public async Task<IActionResult> SearchBook(SearchBookModel searchBookModel)
         {
             try
@@ -53,6 +54,29 @@ namespace BookStoreApp.Controllers
                 if (data.Count != 0)
                 {
                     return this.Ok(new { status = "True", message = "Search Books", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllBooks()
+        {
+            try
+            {
+                var data = await this.bookBL.GetAllBooks();
+                if (data.Count != 0)
+                {
+                    return this.Ok(new { status = "True", message = "All Books", data });
                 }
                 else
                 {

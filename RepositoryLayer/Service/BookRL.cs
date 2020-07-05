@@ -57,6 +57,7 @@ namespace RepositoryLayer.Service
             }
         }
 
+
         public async Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel)
         {
             try
@@ -93,6 +94,46 @@ namespace RepositoryLayer.Service
                 }
             }
             catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<List<BookAddModel>> GetAllBooks()
+        {
+            try
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+
+                DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetAllBooks", paramList);
+                var bookData = new BookAddModel();
+                List<BookAddModel> bookList = new List<BookAddModel>();
+                foreach (DataRow dataRow in table.Rows)
+                {
+                    bookData = new BookAddModel();
+                    bookData.Id = (int)dataRow["Id"];
+                    bookData.BooKTitle = dataRow["Book_Title"].ToString();
+                    bookData.Author = dataRow["Author"].ToString();
+                    bookData.Language = dataRow["Language"].ToString();
+                    bookData.Category = dataRow["Category"].ToString();
+                    bookData.ISBN = Convert.ToInt32(dataRow["ISBN_No"]);
+                    bookData.Price = Convert.ToInt32(dataRow["Price"]);
+                    bookData.Pages = Convert.ToInt32(dataRow["Pages"]);
+                    bookData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
+                    bookData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
+                    bookList.Add(bookData);
+                }
+                if (bookList != null)
+                {
+                    return bookList;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
