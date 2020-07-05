@@ -27,15 +27,24 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                var data = await this.bookBL.AddBook(bookShowModel);
-                if (data != null)
+                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
+                if (claim == "admin")
                 {
-                    return this.Ok(new { status = "True", message = "Book Added Successfully", data });
+                    var data = await this.bookBL.AddBook(bookShowModel);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Book Added Successfully", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Add Book" });
+                    }
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Failed To Add Book" });
+                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Add Book" });
                 }
+
             }
             catch (Exception exception)
             {

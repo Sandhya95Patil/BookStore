@@ -79,7 +79,6 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@Email", adminLoginShowModel.Email));
                 paramList.Add(new StoredProcedureParameterData("@Password", password));
-                paramList.Add(new StoredProcedureParameterData("@UserRole", adminLoginShowModel.UserRole));
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("AdminLogin", paramList);
                 var userData = new RegisterModel();
                 foreach (DataRow dataRow in table.Rows)
