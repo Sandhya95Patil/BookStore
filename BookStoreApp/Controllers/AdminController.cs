@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.ShowModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BookStoreApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         IAdminBL adminBL; 
@@ -21,6 +23,7 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("SignUp")]
+        [AllowAnonymous]
         public async Task<IActionResult> AdminSignUp(AdminShowModel adminShowModel)
         {
             try
@@ -43,6 +46,7 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult> AdminLogin(AdminLoginShowModel adminLoginShowModel)
         {
             try

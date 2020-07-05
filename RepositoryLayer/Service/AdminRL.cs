@@ -109,6 +109,7 @@ namespace RepositoryLayer.Service
                          new Claim ("Id", userData.Id.ToString()),
                          new Claim("Email", userData.Email.ToString()),
                          new Claim("Password", userData.Password.ToString()),
+                         new Claim("UserRole", userData.UserRole.ToString())
                         };
 
                         var token = new JwtSecurityToken("Security token", "https://Test.com",
