@@ -17,7 +17,7 @@ namespace BusinessLayer.Service
             this.adminRL = adminRL;
         }
 
-        public Task<AdminResponseModel> AdminSignUp(AdminShowModel adminShowModel)
+        public Task<ResponseModel> AdminSignUp(ShowModel adminShowModel)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<AdminLoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        public Task<LoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
         {
             try
             {

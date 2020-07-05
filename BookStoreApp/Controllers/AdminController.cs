@@ -24,7 +24,7 @@ namespace BookStoreApp.Controllers
         [HttpPost]
         [Route("SignUp")]
         [AllowAnonymous]
-        public async Task<IActionResult> AdminSignUp(AdminShowModel adminShowModel)
+        public async Task<IActionResult> AdminSignUp(ShowModel adminShowModel)
         {
             try
             {

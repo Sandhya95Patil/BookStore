@@ -24,7 +24,7 @@ namespace RepositoryLayer.Service
             this.configuration = configuration;
         }
 
-        public async Task<AdminResponseModel> AdminSignUp(AdminShowModel adminShowModel)
+        public async Task<ResponseModel> AdminSignUp(ShowModel adminShowModel)
         {
             try
             {
@@ -41,11 +41,11 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("AddUser", paramList);
-                var userData = new AdminResponseModel();
+                var userData = new ResponseModel();
 
                 foreach (DataRow dataRow in table.Rows)
                 {
-                    userData = new AdminResponseModel();
+                    userData = new ResponseModel();
                     userData.Id = (int)dataRow["Id"];
                     userData.FirstName = dataRow["FirstName"].ToString();
                     userData.LastName = dataRow["LastName"].ToString();
@@ -70,7 +70,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<AdminLoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
+        public async Task<LoginResponseModel> AdminLogin(AdminLoginShowModel adminLoginShowModel)
         {
             try
             {
@@ -81,10 +81,10 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@Password", password));
                 paramList.Add(new StoredProcedureParameterData("@UserRole", adminLoginShowModel.UserRole));
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("AdminLogin", paramList);
-                var userData = new AdminModel();
+                var userData = new RegisterModel();
                 foreach (DataRow dataRow in table.Rows)
                 {
-                    userData = new AdminModel();
+                    userData = new RegisterModel();
                     userData.Id = (int)dataRow["Id"];
                     userData.FirstName = dataRow["FirstName"].ToString();
                     userData.LastName = dataRow["LastName"].ToString();
@@ -119,7 +119,7 @@ namespace RepositoryLayer.Service
                             signingCredentials: creadintials);
                         var returnToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                        var responseShow = new AdminLoginResponseModel()
+                        var responseShow = new LoginResponseModel()
                         {
                             Id = userData.Id,
                             FirstName = userData.FirstName,

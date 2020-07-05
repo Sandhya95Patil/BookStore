@@ -39,6 +39,9 @@ namespace BookStoreApp
             services.AddTransient<IBookBL, BookBL>();
             services.AddTransient<IBookRL, BookRL>();
 
+            services.AddTransient<IUserBL, UserBL>();
+            services.AddTransient<IUserRL, UserRL>();
+
             ////This is For Swagger Generaion
             services.AddSwaggerGen(c =>
             {
