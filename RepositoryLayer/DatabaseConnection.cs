@@ -43,27 +43,12 @@ namespace RepositoryLayer
         }
 
         /// <summary>
-        /// Stored Procedure Parameter Data class
-        /// </summary>
-        class StoredProcedureParameterData
-        {
-            public StoredProcedureParameterData(string name, dynamic value)
-            {
-                this.name = name;
-                this.value = value;
-            }
-
-            public string name { get; set; }
-            public dynamic value { get; set; }
-        }
-
-        /// <summary>
         /// Stored Procedure Execute Reader method
         /// </summary>
         /// <param name="spName">spName parameter</param>
         /// <param name="spParams">spParams parameter</param>
         /// <returns>return procedure name and parameters</returns>
-        private async Task<DataTable> StoredProcedureExecuteReader(string spName, IList<StoredProcedureParameterData> spParams)
+        public async Task<DataTable> StoredProcedureExecuteReader(string spName, IList<StoredProcedureParameterData> spParams)
         {
             try
             {
