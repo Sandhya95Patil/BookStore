@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.Interface
 {
-    public interface IBookRL
+    public interface ICartRL
     {
-        Task<BookAddModel> AddBook(BookShowModel bookShowModel);
-        Task<List<BookAddModel>> SearchBook(string searchWord);
-        Task<List<BookAddModel>> GetAllBooks();
-
+        Task<AddCart> AddCart(ShowCartModel showCartModel);
     }
 }

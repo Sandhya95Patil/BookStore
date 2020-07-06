@@ -29,11 +29,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel)
+        public Task<List<BookAddModel>> SearchBook(string searchWord)
         {
             try
             {
-               return  this.bookRL.SearchBook(searchBookModel);
+               return  this.bookRL.SearchBook(searchWord);
             }
             catch (Exception exception)
             {

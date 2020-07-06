@@ -58,13 +58,13 @@ namespace RepositoryLayer.Service
         }
 
 
-        public async Task<List<BookAddModel>> SearchBook(SearchBookModel searchBookModel)
+        public async Task<List<BookAddModel>> SearchBook(string searchWord)
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
-                paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchBookModel.SearchBook));
+                paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchWord));
               
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
                 var bookData = new BookAddModel();

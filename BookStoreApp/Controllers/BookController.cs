@@ -53,20 +53,35 @@ namespace BookStoreApp.Controllers
         }
 
         [HttpGet]
-        [Route("Search")]
+        [Route("")]
         [AllowAnonymous]
-        public async Task<IActionResult> SearchBook(SearchBookModel searchBookModel)
+        public async Task<IActionResult> SearchBook([FromQuery]string searchWord)
         {
             try
             {
-                var data = await this.bookBL.SearchBook(searchBookModel);
-                if (data.Count != 0)
+                if (searchWord != null)
                 {
-                    return this.Ok(new { status = "True", message = "Search Books", data });
+                    var data = await this.bookBL.SearchBook(searchWord);
+                    if (data.Count != 0)
+                    {
+                        return this.Ok(new { status = "True", message = "Search Books", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                    }
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                    var data = await this.bookBL.GetAllBooks();
+                    if (data.Count != 0)
+                    {
+                        return this.Ok(new { status = "True", message = "All Books", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                    }
                 }
             }
             catch (Exception exception)
@@ -75,7 +90,7 @@ namespace BookStoreApp.Controllers
             }
         }
 
-        [HttpGet]
+ /*       [HttpGet]
         [Route("")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllBooks()
@@ -96,6 +111,6 @@ namespace BookStoreApp.Controllers
             {
                 return BadRequest(new { message = exception.Message });
             }
-        }
+        }*/
     }
 }
