@@ -61,5 +61,28 @@ namespace BookStoreApp.Controllers
                 return BadRequest(new { message = exception.Message });
             }
         }
+
+
+        [HttpDelete]
+        [Route("{wishListId}")]
+        public async Task<IActionResult> DeleteWishList(int wishListId)
+        {
+            try
+            {
+                var data = await this.wishListBL.DeleteWishList(wishListId);
+                if (data == true)
+                {
+                    return this.Ok(new { status = "True", message = "Wish List Delete Successfully", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Failed To Delete Wish List" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace BusinessLayer.Interface
     {
         Task<AddWishListModel> AddBookToWishList(ShowWishListModel showWishListModel);
         Task<List<AddWishListModel>> GetAllWishList();
+        Task<bool> DeleteWishList(int wishListId);
     }
 }

@@ -85,5 +85,24 @@ namespace RepositoryLayer.Service
                 throw new Exception(e.Message);
             }
         }
+
+
+        public async Task<bool> DeleteWishList(int wishListId)
+        {
+            DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+            List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+            paramList.Add(new StoredProcedureParameterData("@WishListId", wishListId));
+            DataTable table = await databaseConnection.StoredProcedureExecuteReader("DeleteWishList", paramList);
+            var response = table.NewRow();
+            if (response != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

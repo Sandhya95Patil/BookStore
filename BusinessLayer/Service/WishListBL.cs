@@ -41,5 +41,20 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
+
+
+        public Task<bool> DeleteWishList(int wishListId)
+        {
+            try
+            {
+                var response = this.wishListRL.DeleteWishList(wishListId);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
     }
 }
