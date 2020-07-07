@@ -179,5 +179,31 @@ namespace RepositoryLayer.Service
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<bool> DeleteBook(int bookId)
+        {
+            try
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                SqlConnection sqlConnection = databaseConnection.GetConnection();
+                SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteBook", sqlConnection);
+                sqlConnection.Open();
+                sqlCommand.Parameters.AddWithValue("@BookId", bookId);
+                var response = await sqlCommand.ExecuteNonQueryAsync();
+                sqlConnection.Close();
+                if (response > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

@@ -120,5 +120,36 @@ namespace BookStoreApp.Controllers
                 return BadRequest(new { message = exception.Message });
             }
         }
+
+        [HttpDelete]
+        [Route("{bookId}")]
+        public async Task<IActionResult> DeleteBook(int bookId)
+        {
+            try
+            {
+                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
+                if (claim == "admin")
+                {
+                    var data = await this.bookBL.DeleteBook(bookId);
+                    if (data == true)
+                    {
+                        return this.Ok(new { status = "True", message = "Book Deleted Successfully"});
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Delete Book" });
+                    }
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Update Book" });
+                }
+
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
     }
 }

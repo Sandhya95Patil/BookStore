@@ -13,6 +13,7 @@ namespace RepositoryLayer.Interface
         Task<List<BookAddModel>> SearchBook(string searchWord);
         Task<List<BookAddModel>> GetAllBooks();
         Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel);
+        Task<bool> DeleteBook(int bookId);
 
     }
 }
