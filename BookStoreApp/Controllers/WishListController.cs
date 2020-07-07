@@ -70,9 +70,9 @@ namespace BookStoreApp.Controllers
             try
             {
                 var data = await this.wishListBL.DeleteWishList(wishListId);
-                if (data == true)
+                if (data != null)
                 {
-                    return this.Ok(new { status = "True", message = "Wish List Delete Successfully", data });
+                    return this.Ok(new { status = "True", message = "Wish List Delete Successfully" });
                 }
                 else
                 {

@@ -5,6 +5,8 @@ using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -86,23 +88,23 @@ namespace RepositoryLayer.Service
             }
         }
 
-
-        public async Task<bool> DeleteWishList(int wishListId)
+        public async Task<string> DeleteWishList(int wishListId)
         {
             DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
-            List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
-            paramList.Add(new StoredProcedureParameterData("@WishListId", wishListId));
-            DataTable table = await databaseConnection.StoredProcedureExecuteReader("DeleteWishList", paramList);
-            var response = table.NewRow();
-            if (response != null)
+            SqlConnection sqlConnection = databaseConnection.GetConnection();
+            SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteWishList", sqlConnection);
+            sqlConnection.Open();
+            sqlCommand.Parameters.AddWithValue("@WishListId", wishListId);
+            var response = await sqlCommand.ExecuteNonQueryAsync();
+            sqlConnection.Close();
+            if (response > 0)
             {
-                return true;
+                return "Delete Wish List Successfully";
             }
             else
             {
-                return false;
+                return null;
             }
         }
-
     }
 }

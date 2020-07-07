@@ -2,6 +2,7 @@
 using CommonLayer.ShowModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace RepositoryLayer.Interface
     {
         Task<AddWishListModel> AddBookToWishList(ShowWishListModel showWishListModel);
         Task<List<AddWishListModel>> GetAllWishList();
-        Task<bool> DeleteWishList(int wishListId);
+        Task<string> DeleteWishList(int wishListId);
 
     }
 }

@@ -21,11 +21,10 @@ namespace RepositoryLayer
         /// </summary>
         /// <param name="connectionName">connectionName parameter</param>
         /// <returns>return the connection</returns>
-        public SqlConnection GetConnection(string connectionName)
+        public SqlConnection GetConnection()
         {
-            SqlConnection connection = new SqlConnection(configuration["ConnectionStrings:connectionDb"]);
-            connection.Open();
-            return connection;
+            return new SqlConnection(configuration["ConnectionStrings:connectionDb"]);
+
         }
 
         /// <summary>
@@ -33,11 +32,9 @@ namespace RepositoryLayer
         /// </summary>
         /// <param name="command">command parameter</param>
         /// <returns>return command</returns>
-        public SqlCommand GetCommand(string command)
+        public SqlCommand GetCommand(string commandName, SqlConnection connection)
         {
-            string connection = "";
-            SqlConnection sqlConnection = GetConnection(connection);
-            SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+            SqlCommand sqlCommand = new SqlCommand(commandName, connection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
             return sqlCommand;
         }
@@ -52,13 +49,14 @@ namespace RepositoryLayer
         {
             try
             {
-                SqlCommand command = GetCommand(spName);
+                SqlConnection connection = GetConnection();
+                SqlCommand sqlCommand = GetCommand(spName, connection);
                 for (int i = 0; i < spParams.Count; i++)
                 {
-                    command.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
+                    sqlCommand.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
                 }
                 DataTable table = new DataTable();
-                SqlDataReader dataReader = await command.ExecuteReaderAsync();
+                SqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync();
                 table.Load(dataReader);
                 return table;
             }
