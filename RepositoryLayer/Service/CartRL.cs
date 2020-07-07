@@ -57,12 +57,12 @@ namespace RepositoryLayer.Service
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 SqlConnection sqlConnection = databaseConnection.GetConnection();
-                SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteWishList", sqlConnection);
+                SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteCart", sqlConnection);
                 sqlConnection.Open();
                 sqlCommand.Parameters.AddWithValue("@CartId", cartId);
+                var response = await sqlCommand.ExecuteNonQueryAsync();
                 sqlConnection.Close();
 
-                var response = await sqlCommand.ExecuteNonQueryAsync();
                 if (response > 0)
                 {
                     return "Delete Cart Successfully";
@@ -85,43 +85,6 @@ namespace RepositoryLayer.Service
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetAllCart", paramList);
-                var cartData = new AddCart();
-                List<AddCart> cartLists = new List<AddCart>();
-
-                foreach (DataRow dataRow in table.Rows)
-                {
-                    cartData = new AddCart();
-                    cartData.CartId = (int)dataRow["Id"];
-                    cartData.UserId = Convert.ToInt32(dataRow["UserId"].ToString());
-                    cartData.BookId = Convert.ToInt32(dataRow["BookId"].ToString());
-                    cartData.IsUsed = Convert.ToBoolean(dataRow["IsUsed"].ToString());
-                    cartData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
-                    cartData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
-                    cartLists.Add(cartData);
-                }
-                if (cartLists.Count != 0)
-                {
-                    return cartLists;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        public async Task<List<AddCart>> GetCartByCartId(int cartId)
-        {
-            try
-            {
-                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
-                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
-                paramList.Add(new StoredProcedureParameterData("@CartId", cartId));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetCartByCartId", paramList);
                 var cartData = new AddCart();
                 List<AddCart> cartLists = new List<AddCart>();
 

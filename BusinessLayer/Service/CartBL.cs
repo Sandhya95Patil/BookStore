@@ -42,18 +42,6 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<AddCart>> GetCartByCartId(int cartId)
-        {
-            try
-            {
-                var response = this.cartRL.GetAllCart();
-                return response;
-            }
-            catch (Exception exception)
-            {
-                throw new Exception(exception.Message);
-            }
-        }
         public Task<string> DeleteCart(int cartId)
         {
             try

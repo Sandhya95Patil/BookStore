@@ -72,7 +72,7 @@ namespace BookStoreApp.Controllers
                 var data = await this.cartBL.DeleteCart(cartId);
                 if (data != null)
                 {
-                    return this.Ok(new { status = "True", message = "Cart Deleted Successfully", data });
+                    return this.Ok(new { status = "True", message = "Cart Deleted Successfully" });
                 }
                 else
                 {

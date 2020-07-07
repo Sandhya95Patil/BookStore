@@ -107,7 +107,6 @@ namespace RepositoryLayer.Service
                         var claims = new[] {
                          new Claim ("Id", userData.Id.ToString()),
                          new Claim("Email", userData.Email.ToString()),
-                         new Claim("Password", userData.Password.ToString()),
                          new Claim("UserRole", userData.UserRole.ToString())
                         };
 
