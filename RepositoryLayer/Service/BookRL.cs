@@ -5,6 +5,7 @@ using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -132,6 +133,46 @@ namespace RepositoryLayer.Service
                 {
                     return null;
                 }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel)
+        {
+            try
+            {
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                SqlConnection sqlConnection = databaseConnection.GetConnection();
+                SqlCommand sqlCommand = databaseConnection.GetCommand("UpdateBookPrice", sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@BookId", updateBookModel.BookId);
+                sqlCommand.Parameters.AddWithValue("@Price", updateBookModel.Price);
+                sqlConnection.Open();
+                SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync();
+
+                BookAddModel bookAddModel = new BookAddModel();
+                while (sqlDataReader.Read())
+                {
+                    bookAddModel = new BookAddModel();
+                    bookAddModel.Id = (int)sqlDataReader["Id"];
+                    bookAddModel.BooKTitle = sqlDataReader["Book_Title"].ToString();
+                    bookAddModel.Author = sqlDataReader["Author"].ToString();
+                    bookAddModel.Language = sqlDataReader["Language"].ToString();
+                    bookAddModel.Category = sqlDataReader["Category"].ToString();
+                    bookAddModel.ISBN = (int)sqlDataReader["ISBN_No"];
+                    bookAddModel.Price = (int)sqlDataReader["Price"];
+                    bookAddModel.Pages = (int)sqlDataReader["Pages"];
+                    bookAddModel.CreatedDate = Convert.ToDateTime(sqlDataReader["CreatedDate"]);
+                    bookAddModel.ModifiedDate = DateTime.Now;
+                    if (bookAddModel.Id == updateBookModel.BookId)
+                    {
+                        return bookAddModel;
+                    }
+                }
+                sqlConnection.Close();
+                return null;
             }
             catch (Exception e)
             {

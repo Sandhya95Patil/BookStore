@@ -40,5 +40,49 @@ namespace BookStoreApp.Controllers
                 return BadRequest(new { message = exception.Message });
             }
         }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetAllCart()
+        {
+            try
+            {
+                    var data = await this.cartBL.GetAllCart();
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "All Carts", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Get Carts" });
+                    }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
+
+        [HttpDelete]
+        [Route("{cartId}")]
+        public async Task<IActionResult> DeleteCart(int cartId)
+        {
+            try
+            {
+                var data = await this.cartBL.DeleteCart(cartId);
+                if (data != null)
+                {
+                    return this.Ok(new { status = "True", message = "Cart Deleted Successfully", data });
+                }
+                else
+                {
+                    return this.BadRequest(new { status = "False", message = "Failed To Delete Carts" });
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(new { message = exception.Message });
+            }
+        }
     }
 }

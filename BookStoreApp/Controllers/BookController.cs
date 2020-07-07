@@ -90,27 +90,35 @@ namespace BookStoreApp.Controllers
             }
         }
 
- /*       [HttpGet]
+        [HttpPut]
         [Route("")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAllBooks()
+        public async Task<IActionResult> UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
             {
-                var data = await this.bookBL.GetAllBooks();
-                if (data.Count != 0)
+                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
+                if (claim == "admin")
                 {
-                    return this.Ok(new { status = "True", message = "All Books", data });
+                    var data = await this.bookBL.UpdateBookPrice(updateBookModel);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Book Updated Successfully", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Upate Book" });
+                    }
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Books Not Available" });
+                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Update Book" });
                 }
+
             }
             catch (Exception exception)
             {
                 return BadRequest(new { message = exception.Message });
             }
-        }*/
+        }
     }
 }

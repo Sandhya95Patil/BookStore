@@ -54,5 +54,16 @@ namespace BusinessLayer.Service
             }
         }
 
+        public Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel)
+        {
+            try
+            {
+                return this.bookRL.UpdateBookPrice(updateBookModel);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
     }
 }

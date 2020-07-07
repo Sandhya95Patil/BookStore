@@ -90,20 +90,27 @@ namespace RepositoryLayer.Service
 
         public async Task<string> DeleteWishList(int wishListId)
         {
-            DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
-            SqlConnection sqlConnection = databaseConnection.GetConnection();
-            SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteWishList", sqlConnection);
-            sqlConnection.Open();
-            sqlCommand.Parameters.AddWithValue("@WishListId", wishListId);
-            var response = await sqlCommand.ExecuteNonQueryAsync();
-            sqlConnection.Close();
-            if (response > 0)
+            try
             {
-                return "Delete Wish List Successfully";
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                SqlConnection sqlConnection = databaseConnection.GetConnection();
+                SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteWishList", sqlConnection);
+                sqlConnection.Open();
+                sqlCommand.Parameters.AddWithValue("@WishListId", wishListId);
+                var response = await sqlCommand.ExecuteNonQueryAsync();
+                sqlConnection.Close();
+                if (response > 0)
+                {
+                    return "Delete Wish List Successfully";
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch(Exception e)
             {
-                return null;
+                throw new Exception(e.Message);
             }
         }
     }

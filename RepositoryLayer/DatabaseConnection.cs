@@ -34,8 +34,10 @@ namespace RepositoryLayer
         /// <returns>return command</returns>
         public SqlCommand GetCommand(string commandName, SqlConnection connection)
         {
+            connection.Open();
             SqlCommand sqlCommand = new SqlCommand(commandName, connection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
+            connection.Close();
             return sqlCommand;
         }
 
@@ -55,9 +57,11 @@ namespace RepositoryLayer
                 {
                     sqlCommand.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
                 }
+                connection.Open();
                 DataTable table = new DataTable();
                 SqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync();
                 table.Load(dataReader);
+                connection.Close();
                 return table;
             }
             catch (Exception exception)

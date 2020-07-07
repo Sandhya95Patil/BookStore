@@ -144,7 +144,7 @@ namespace RepositoryLayer.Service
             }
             catch (Exception e)
             {
-                throw new Exception("Email or Passord is Not Correct");
+                throw new Exception(e.Message);
             }
         }
     }

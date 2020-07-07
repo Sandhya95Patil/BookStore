@@ -28,5 +28,43 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
+
+        public Task<List<AddCart>> GetAllCart()
+        {
+            try
+            {
+                var response = this.cartRL.GetAllCart();
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public Task<List<AddCart>> GetCartByCartId(int cartId)
+        {
+            try
+            {
+                var response = this.cartRL.GetAllCart();
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+        public Task<string> DeleteCart(int cartId)
+        {
+            try
+            {
+                var response = this.cartRL.DeleteCart(cartId);
+                return response;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
     }
 }
