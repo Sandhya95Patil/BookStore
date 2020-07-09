@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.EncryptedPassword;
 using RepositoryLayer.Interface;
+using RepositoryLayer.MSMQ;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -57,6 +58,8 @@ namespace RepositoryLayer.Service
                 }
                 if (userData.Email != null)
                 {
+                    MSMQSender mSMQSender = new MSMQSender();
+                    mSMQSender.Message(userData.Email);
                     return userData;
                 }
                 else

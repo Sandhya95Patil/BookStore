@@ -17,11 +17,11 @@ namespace BusinessLayer.Service
         {
             this.wishListRL = wishListRL;
         }
-        public Task<AddWishListModel> AddBookToWishList(ShowWishListModel showWishListModel)
+        public Task<AddWishListModel> AddBookToWishList(int userId, ShowWishListModel showWishListModel)
         {
             try
             {
-                var response = this.wishListRL.AddBookToWishList(showWishListModel);
+                var response = this.wishListRL.AddBookToWishList(userId, showWishListModel);
                 return response;
             }
             catch (Exception exception)
@@ -30,11 +30,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<AddWishListModel>> GetAllWishList()
+        public Task<List<AddWishListModel>> GetAllWishList(int userId)
         {
             try
             {
-                var response = this.wishListRL.GetAllWishList();
+                var response = this.wishListRL.GetAllWishList(userId);
                 return response;
             }
             catch (Exception exception)
@@ -44,11 +44,11 @@ namespace BusinessLayer.Service
         }
 
 
-        public Task<string> DeleteWishList(int wishListId)
+        public Task<string> DeleteWishList(int userId, int wishListId)
         {
             try
             {
-                var response = this.wishListRL.DeleteWishList(wishListId);
+                var response = this.wishListRL.DeleteWishList(userId, wishListId);
                 return response;
             }
             catch (Exception exception)
@@ -56,6 +56,5 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
-
     }
 }

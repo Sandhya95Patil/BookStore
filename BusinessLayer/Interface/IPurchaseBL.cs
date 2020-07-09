@@ -9,6 +9,6 @@ namespace BusinessLayer.Interface
 {
     public interface IPurchaseBL
     {
-        Task<PurchaseResponseModel> BookPurchase(ShowPurchaseBookModel showPurchaseModel);
+        Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel);
     }
 }

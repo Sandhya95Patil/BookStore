@@ -9,8 +9,8 @@ namespace BusinessLayer.Interface
 {
     public interface ICartBL
     {
-        Task<AddCart> AddCart(ShowCartModel showCartModel);
-        Task<List<AddCart>> GetAllCart();
-        Task<string> DeleteCart(int cartId);
+        Task<AddCart> AddCart(int userId, ShowCartModel showCartModel);
+        Task<List<AddCart>> GetAllCart(int userId);
+        Task<string> DeleteCart(int userId, int cartId);
     }
 }

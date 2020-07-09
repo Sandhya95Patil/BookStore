@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.ShowModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BookStoreApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         ICartBL cartBL;
@@ -25,15 +27,16 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                var data = await this.cartBL.AddCart(showCartModel);
-                if (data != null)
-                {
-                    return this.Ok(new { status = "True", message = "Book Added To Cart Successfully", data });
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "Failed To Add Cart" });
-                }
+                    var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.cartBL.AddCart(claim, showCartModel);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Book Added To Cart Successfully", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Add Cart" });
+                    }
             }
             catch (Exception exception)
             {
@@ -47,7 +50,8 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                    var data = await this.cartBL.GetAllCart();
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.cartBL.GetAllCart(claim);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "All Carts", data });
@@ -69,15 +73,16 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                var data = await this.cartBL.DeleteCart(cartId);
-                if (data != null)
-                {
-                    return this.Ok(new { status = "True", message = "Cart Deleted Successfully" });
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "Failed To Delete Carts" });
-                }
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.cartBL.DeleteCart(claim, cartId);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Cart Deleted Successfully" });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Delete Carts" });
+                    }
             }
             catch (Exception exception)
             {

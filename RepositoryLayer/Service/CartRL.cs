@@ -18,15 +18,15 @@ namespace RepositoryLayer.Service
         {
             this.configuration = configuration;
         }
-        public async Task<AddCart> AddCart(ShowCartModel showCartModel)
+        public async Task<AddCart> AddCart(int userId, ShowCartModel showCartModel)
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
-                paramList.Add(new StoredProcedureParameterData("@UserId", showCartModel.UserId));
+                paramList.Add(new StoredProcedureParameterData("@UserId", userId));
                 paramList.Add(new StoredProcedureParameterData("@BookId", showCartModel.BookId));
-                paramList.Add(new StoredProcedureParameterData("@IsUsed", true));
+                paramList.Add(new StoredProcedureParameterData("@IsUsed", false));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
         
@@ -51,7 +51,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<string> DeleteCart(int cartId)
+        public async Task<string> DeleteCart(int userId, int cartId)
         {
             try
             {
@@ -59,6 +59,7 @@ namespace RepositoryLayer.Service
                 SqlConnection sqlConnection = databaseConnection.GetConnection();
                 SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteCart", sqlConnection);
                 sqlConnection.Open();
+                sqlCommand.Parameters.AddWithValue("@UserId", userId);
                 sqlCommand.Parameters.AddWithValue("@CartId", cartId);
                 var response = await sqlCommand.ExecuteNonQueryAsync();
                 sqlConnection.Close();
@@ -78,12 +79,13 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<List<AddCart>> GetAllCart()
+        public async Task<List<AddCart>> GetAllCart(int userId)
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+                paramList.Add(new StoredProcedureParameterData("@UserId", userId));
                 DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetAllCart", paramList);
                 var cartData = new AddCart();
                 List<AddCart> cartLists = new List<AddCart>();

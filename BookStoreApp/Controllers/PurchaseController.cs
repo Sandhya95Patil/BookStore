@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.ShowModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BookStoreApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PurchaseController : ControllerBase
     {
         IPurchaseBL purchaseBL;
@@ -21,28 +23,20 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddBook(ShowPurchaseBookModel showPurchaseBookModel)
+        public async Task<IActionResult> PurchaseBook(ShowPurchaseBookModel showPurchaseBookModel)
         {
             try
             {
-                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
-                if (claim == "user")
-                {
-                    var data = await this.purchaseBL.BookPurchase(showPurchaseBookModel);
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.purchaseBL.BookPurchase(claim, showPurchaseBookModel);
                     if (data != null)
                     {
-                        return this.Ok(new { status = "True", message = "Book Purchase Successfully", data });
+                        return this.Ok(new { status = "True", message = "Book Orderd Successfully", data });
                     }
                     else
                     {
-                        return this.BadRequest(new { status = "False", message = "Failed To Purchase Book" });
+                        return this.BadRequest(new { status = "False", message = "Failed To Orderd Book" });
                     }
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Buy Book" });
-                }
-
             }
             catch (Exception exception)
             {

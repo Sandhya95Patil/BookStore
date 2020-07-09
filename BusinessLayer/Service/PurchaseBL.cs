@@ -17,11 +17,11 @@ namespace BusinessLayer.Service
             this.purchaseRL = purchaseRL;
         }
 
-        public Task<PurchaseResponseModel> BookPurchase(ShowPurchaseBookModel showPurchaseModel)
+        public Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
         {
             try
             {
-                var response = this.purchaseRL.BookPurchase(showPurchaseModel);
+                var response = this.purchaseRL.BookPurchase(userId, showPurchaseModel);
                 return response;
             }
             catch (Exception exception)

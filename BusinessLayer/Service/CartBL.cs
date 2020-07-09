@@ -16,11 +16,11 @@ namespace BusinessLayer.Service
         {
             this.cartRL = cartRL;
         }
-        public Task<AddCart> AddCart(ShowCartModel showCartModel)
+        public Task<AddCart> AddCart(int userId, ShowCartModel showCartModel)
         {
             try
             {
-                var response = this.cartRL.AddCart(showCartModel);
+                var response = this.cartRL.AddCart(userId, showCartModel);
                 return response;
             }
             catch (Exception exception)
@@ -29,11 +29,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<AddCart>> GetAllCart()
+        public Task<List<AddCart>> GetAllCart(int userId)
         {
             try
             {
-                var response = this.cartRL.GetAllCart();
+                var response = this.cartRL.GetAllCart(userId);
                 return response;
             }
             catch (Exception exception)
@@ -42,11 +42,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<string> DeleteCart(int cartId)
+        public Task<string> DeleteCart(int userId, int cartId)
         {
             try
             {
-                var response = this.cartRL.DeleteCart(cartId);
+                var response = this.cartRL.DeleteCart(userId, cartId);
                 return response;
             }
             catch (Exception exception)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.ShowModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BookStoreApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WishListController : ControllerBase
     {
         IWishListBL wishListBL;
@@ -20,19 +22,20 @@ namespace BookStoreApp.Controllers
         }
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddWishList(ShowWishListModel showWishListModel)
+        public async Task<IActionResult> AddWishList(int userId, ShowWishListModel showWishListModel)
         {
             try
             {
-                var data = await this.wishListBL.AddBookToWishList(showWishListModel);
-                if (data != null)
-                {
-                    return this.Ok(new { status = "True", message = "Book Added To WishList Successfully", data });
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "Failed To Add WishList" });
-                }
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.wishListBL.AddBookToWishList(claim, showWishListModel);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Book Added To WishList Successfully", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Add WishList" });
+                    }
             }
             catch (Exception exception)
             {
@@ -46,15 +49,16 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                var data = await this.wishListBL.GetAllWishList();
-                if (data != null)
-                {
-                    return this.Ok(new { status = "True", message = "All Wish List", data });
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "WishLists Not Available" });
-                }
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.wishListBL.GetAllWishList(claim);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "All Wish List", data });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "WishLists Not Available" });
+                    }
             }
             catch (Exception exception)
             {
@@ -69,15 +73,16 @@ namespace BookStoreApp.Controllers
         {
             try
             {
-                var data = await this.wishListBL.DeleteWishList(wishListId);
-                if (data != null)
-                {
-                    return this.Ok(new { status = "True", message = "Wish List Delete Successfully" });
-                }
-                else
-                {
-                    return this.BadRequest(new { status = "False", message = "Failed To Delete Wish List" });
-                }
+                var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+                    var data = await this.wishListBL.DeleteWishList(claim, wishListId);
+                    if (data != null)
+                    {
+                        return this.Ok(new { status = "True", message = "Wish List Delete Successfully" });
+                    }
+                    else
+                    {
+                        return this.BadRequest(new { status = "False", message = "Failed To Delete Wish List" });
+                    }
             }
             catch (Exception exception)
             {

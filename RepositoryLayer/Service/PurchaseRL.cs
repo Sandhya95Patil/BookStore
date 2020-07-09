@@ -17,13 +17,17 @@ namespace RepositoryLayer.Service
         {
             this.configuration = configuration;
         }
-        public async Task<PurchaseResponseModel> BookPurchase(ShowPurchaseBookModel showPurchaseModel)
+
+        public async Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+                paramList.Add(new StoredProcedureParameterData("@UserId", userId));
                 paramList.Add(new StoredProcedureParameterData("@CartId", showPurchaseModel.CartId));
+                paramList.Add(new StoredProcedureParameterData("@BookId", showPurchaseModel.BookId));
+                paramList.Add(new StoredProcedureParameterData("@IsUsed", true));
                 paramList.Add(new StoredProcedureParameterData("@Address", showPurchaseModel.Address));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));

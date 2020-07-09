@@ -8,6 +8,7 @@ namespace CommonLayer.ShowModel
     public class ShowPurchaseBookModel
     {
         public int CartId { get; set; }
+        public int BookId { get; set; }
         public string Address { get; set; }
     }
 }

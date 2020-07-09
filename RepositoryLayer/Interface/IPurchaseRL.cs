@@ -9,7 +9,7 @@ namespace RepositoryLayer.Interface
 {
     public interface IPurchaseRL
     {
-        Task<PurchaseResponseModel> BookPurchase(ShowPurchaseBookModel showPurchaseModel);
+        Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel);
 
     }
 }

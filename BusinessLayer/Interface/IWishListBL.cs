@@ -10,8 +10,8 @@ namespace BusinessLayer.Interface
 {
     public interface IWishListBL
     {
-        Task<AddWishListModel> AddBookToWishList(ShowWishListModel showWishListModel);
-        Task<List<AddWishListModel>> GetAllWishList();
-        Task<string> DeleteWishList(int wishListId);
+        Task<AddWishListModel> AddBookToWishList(int userId, ShowWishListModel showWishListModel);
+        Task<List<AddWishListModel>> GetAllWishList(int userId);
+        Task<string> DeleteWishList(int userId, int wishListId);
     }
 }
