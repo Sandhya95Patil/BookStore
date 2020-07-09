@@ -18,7 +18,7 @@ namespace RepositoryLayer.Service
             this.configuration = configuration;
         }
 
-        public async Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
+        public PurchaseResponseModel BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
 
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("PurchaseBook", paramList);
+                DataTable table =  databaseConnection.StoredProcedureExecuteReader("PurchaseBook", paramList);
                 var purchaseData = new PurchaseResponseModel();
 
                 foreach (DataRow dataRow in table.Rows)

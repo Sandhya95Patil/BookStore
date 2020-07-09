@@ -22,12 +22,12 @@ namespace BookStoreApp.Controllers
         }
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddWishList(int userId, ShowWishListModel showWishListModel)
+        public IActionResult AddWishList(int userId, ShowWishListModel showWishListModel)
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.wishListBL.AddBookToWishList(claim, showWishListModel);
+                    var data = this.wishListBL.AddBookToWishList(claim, showWishListModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Added To WishList Successfully", data });
@@ -45,12 +45,12 @@ namespace BookStoreApp.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetWishList()
+        public IActionResult GetWishList()
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.wishListBL.GetAllWishList(claim);
+                    var data =  this.wishListBL.GetAllWishList(claim);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "All Wish List", data });
@@ -69,12 +69,12 @@ namespace BookStoreApp.Controllers
 
         [HttpDelete]
         [Route("{wishListId}")]
-        public async Task<IActionResult> DeleteWishList(int wishListId)
+        public IActionResult DeleteWishList(int wishListId)
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.wishListBL.DeleteWishList(claim, wishListId);
+                    var data =  this.wishListBL.DeleteWishList(claim, wishListId);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Wish List Delete Successfully" });

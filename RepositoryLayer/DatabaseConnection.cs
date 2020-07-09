@@ -47,7 +47,7 @@ namespace RepositoryLayer
         /// <param name="spName">spName parameter</param>
         /// <param name="spParams">spParams parameter</param>
         /// <returns>return procedure name and parameters</returns>
-        public async Task<DataTable> StoredProcedureExecuteReader(string spName, IList<StoredProcedureParameterData> spParams)
+        public DataTable StoredProcedureExecuteReader(string spName, IList<StoredProcedureParameterData> spParams)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace RepositoryLayer
                 }
                 connection.Open();
                 DataTable table = new DataTable();
-                SqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync();
+                SqlDataReader dataReader = sqlCommand.ExecuteReader();
                 table.Load(dataReader);
                 connection.Close();
                 return table;

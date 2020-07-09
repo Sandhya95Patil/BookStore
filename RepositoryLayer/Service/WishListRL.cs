@@ -19,7 +19,7 @@ namespace RepositoryLayer.Service
         {
             this.configuration = configuration;
         }
-        public async Task<AddWishListModel> AddBookToWishList(int userId, ShowWishListModel showWishListModel)
+        public AddWishListModel AddBookToWishList(int userId, ShowWishListModel showWishListModel)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
 
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("BookAddToWishList", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("BookAddToWishList", paramList);
                 var wishListData = new AddWishListModel();
 
                 foreach (DataRow dataRow in table.Rows)
@@ -52,14 +52,14 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<List<AddWishListModel>> GetAllWishList(int userId)
+        public List<AddWishListModel> GetAllWishList(int userId)
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@UserId", userId));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetAllWishList", paramList);
+                DataTable table =  databaseConnection.StoredProcedureExecuteReader("GetAllWishList", paramList);
                 var wishListData = new AddWishListModel();
                 List<AddWishListModel> wishLists = new List<AddWishListModel>();
 
@@ -89,7 +89,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<string> DeleteWishList(int userId, int wishListId)
+        public string DeleteWishList(int userId, int wishListId)
         {
             try
             {
@@ -99,15 +99,15 @@ namespace RepositoryLayer.Service
                 sqlConnection.Open();
                 sqlCommand.Parameters.AddWithValue("@UserId", userId);
                 sqlCommand.Parameters.AddWithValue("@WishListId", wishListId);
-                var response = await sqlCommand.ExecuteNonQueryAsync();
+                var response =  sqlCommand.ExecuteReader();
                 sqlConnection.Close();
-                if (response > 0)
+                if (response.Equals(0))
                 {
-                    return "Delete Wish List Successfully";
+                    return null;
                 }
                 else
                 {
-                    return null;
+                    return "Delete Wish List Successfully";
                 }
             }
             catch(Exception e)

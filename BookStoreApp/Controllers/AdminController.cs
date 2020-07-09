@@ -24,11 +24,11 @@ namespace BookStoreApp.Controllers
         [HttpPost]
         [Route("SignUp")]
         [AllowAnonymous]
-        public async Task<IActionResult> AdminSignUp(ShowModel adminShowModel)
+        public IActionResult AdminSignUp(ShowModel adminShowModel)
         {
             try
             {
-                var data = await this.adminBL.AdminSignUp(adminShowModel);
+                var data =  this.adminBL.AdminSignUp(adminShowModel);
                 if (data != null)
                 {
                     return this.Ok(new { status = "True", message = "Register Successfully", data });
@@ -47,11 +47,11 @@ namespace BookStoreApp.Controllers
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> AdminLogin(LoginShowModel adminLoginShowModel)
+        public IActionResult AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {
-                var data = await this.adminBL.AdminLogin(adminLoginShowModel);
+                var data =  this.adminBL.AdminLogin(adminLoginShowModel);
                 if (data != null)
                 {
                     return this.Ok(new { status = "True", message = "Login Successfully", data });

@@ -9,9 +9,9 @@ namespace RepositoryLayer.Interface
 {
     public interface ICartRL
     {
-        Task<AddCart> AddCart(int userId, ShowCartModel showCartModel);
-        Task<List<AddCart>> GetAllCart(int userId);
-        Task<string> DeleteCart(int userId, int cartId);
+        AddCart AddCart(int userId, ShowCartModel showCartModel);
+        List<AddCart> GetAllCart(int userId);
+        string DeleteCart(int userId, int cartId);
 
     }
 }

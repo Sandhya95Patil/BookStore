@@ -25,7 +25,7 @@ namespace RepositoryLayer.Service
         }
 
 
-        public async Task<ResponseModel> UserSignUp(ShowModel adminShowModel)
+        public ResponseModel UserSignUp(ShowModel adminShowModel)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@UserRole", userType));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("AddUser", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("AddUser", paramList);
                 var userData = new ResponseModel();
 
                 foreach (DataRow dataRow in table.Rows)
@@ -74,7 +74,7 @@ namespace RepositoryLayer.Service
         }
 
 
-        public async Task<LoginResponseModel> UserLogin(LoginShowModel loginShowModel)
+        public LoginResponseModel UserLogin(LoginShowModel loginShowModel)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@Email", loginShowModel.Email));
                 paramList.Add(new StoredProcedureParameterData("@Password", password));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("UserLogin", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("UserLogin", paramList);
                 var userData = new RegisterModel();
                 foreach (DataRow dataRow in table.Rows)
                 {
@@ -148,7 +148,7 @@ namespace RepositoryLayer.Service
             }
             catch (Exception e)
             {
-                throw new Exception("Email or Passord is Not Correct");
+                throw new Exception(e.Message);
             }
         }
     }

@@ -23,12 +23,12 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> PurchaseBook(ShowPurchaseBookModel showPurchaseBookModel)
+        public IActionResult PurchaseBook(ShowPurchaseBookModel showPurchaseBookModel)
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.purchaseBL.BookPurchase(claim, showPurchaseBookModel);
+                    var data = this.purchaseBL.BookPurchase(claim, showPurchaseBookModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Orderd Successfully", data });

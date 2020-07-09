@@ -19,12 +19,13 @@ namespace RepositoryLayer.Service
     public class AdminRL : IAdminRL
     {
         private readonly IConfiguration configuration;
+
         public AdminRL(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public async Task<ResponseModel> AdminSignUp(ShowModel adminShowModel)
+        public ResponseModel AdminSignUp(ShowModel adminShowModel)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@UserRole", userType));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("AddUser", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("AddUser", paramList);
                 var userData = new ResponseModel();
 
                 foreach (DataRow dataRow in table.Rows)
@@ -66,11 +67,11 @@ namespace RepositoryLayer.Service
             }
             catch (Exception exception)
             {
-                throw new Exception(exception.Message);
+                throw exception;
             }
         }
 
-        public async Task<LoginResponseModel> AdminLogin(LoginShowModel adminLoginShowModel)
+        public LoginResponseModel AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@Email", adminLoginShowModel.Email));
                 paramList.Add(new StoredProcedureParameterData("@Password", password));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("AdminLogin", paramList);
+                DataTable table =  databaseConnection.StoredProcedureExecuteReader("AdminLogin", paramList);
                 var userData = new RegisterModel();
                 foreach (DataRow dataRow in table.Rows)
                 {

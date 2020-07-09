@@ -23,12 +23,12 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddCart(ShowCartModel showCartModel)
+        public IActionResult AddCart(ShowCartModel showCartModel)
         {
             try
             {
                     var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.cartBL.AddCart(claim, showCartModel);
+                    var data = this.cartBL.AddCart(claim, showCartModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Added To Cart Successfully", data });
@@ -46,12 +46,12 @@ namespace BookStoreApp.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAllCart()
+        public IActionResult GetAllCart()
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.cartBL.GetAllCart(claim);
+                    var data =  this.cartBL.GetAllCart(claim);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "All Carts", data });
@@ -69,12 +69,12 @@ namespace BookStoreApp.Controllers
 
         [HttpDelete]
         [Route("{cartId}")]
-        public async Task<IActionResult> DeleteCart(int cartId)
+        public IActionResult DeleteCart(int cartId)
         {
             try
             {
                 var claim = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-                    var data = await this.cartBL.DeleteCart(claim, cartId);
+                    var data =  this.cartBL.DeleteCart(claim, cartId);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Cart Deleted Successfully" });

@@ -17,7 +17,7 @@ namespace BusinessLayer.Service
             this.purchaseRL = purchaseRL;
         }
 
-        public Task<PurchaseResponseModel> BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
+        public PurchaseResponseModel BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
         {
             try
             {

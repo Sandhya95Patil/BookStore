@@ -17,7 +17,7 @@ namespace BusinessLayer.Service
         {
             this.wishListRL = wishListRL;
         }
-        public Task<AddWishListModel> AddBookToWishList(int userId, ShowWishListModel showWishListModel)
+        public AddWishListModel AddBookToWishList(int userId, ShowWishListModel showWishListModel)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<AddWishListModel>> GetAllWishList(int userId)
+        public List<AddWishListModel> GetAllWishList(int userId)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace BusinessLayer.Service
         }
 
 
-        public Task<string> DeleteWishList(int userId, int wishListId)
+        public string DeleteWishList(int userId, int wishListId)
         {
             try
             {

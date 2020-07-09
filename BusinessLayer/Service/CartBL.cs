@@ -16,7 +16,7 @@ namespace BusinessLayer.Service
         {
             this.cartRL = cartRL;
         }
-        public Task<AddCart> AddCart(int userId, ShowCartModel showCartModel)
+        public AddCart AddCart(int userId, ShowCartModel showCartModel)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<AddCart>> GetAllCart(int userId)
+        public List<AddCart> GetAllCart(int userId)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<string> DeleteCart(int userId, int cartId)
+        public string DeleteCart(int userId, int cartId)
         {
             try
             {

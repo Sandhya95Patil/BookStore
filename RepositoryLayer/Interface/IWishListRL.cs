@@ -10,9 +10,9 @@ namespace RepositoryLayer.Interface
 {
     public interface IWishListRL
     {
-        Task<AddWishListModel> AddBookToWishList(int userId, ShowWishListModel showWishListModel);
-        Task<List<AddWishListModel>> GetAllWishList(int userId);
-        Task<string> DeleteWishList(int userId, int wishListId);
+        AddWishListModel AddBookToWishList(int userId, ShowWishListModel showWishListModel);
+        List<AddWishListModel> GetAllWishList(int userId);
+        string DeleteWishList(int userId, int wishListId);
 
     }
 }

@@ -23,14 +23,14 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddBook(BookShowModel bookShowModel)
+        public IActionResult AddBook(BookShowModel bookShowModel)
         {
             try
             {
                 var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
                 if (claim == "admin")
                 {
-                    var data = await this.bookBL.AddBook(bookShowModel);
+                    var data =  this.bookBL.AddBook(bookShowModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Added Successfully", data });
@@ -55,13 +55,13 @@ namespace BookStoreApp.Controllers
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public async Task<IActionResult> SearchBook([FromQuery]string searchWord)
+        public IActionResult SearchBook([FromQuery]string searchWord)
         {
             try
             {
                 if (searchWord != null)
                 {
-                    var data = await this.bookBL.SearchBook(searchWord);
+                    var data =  this.bookBL.SearchBook(searchWord);
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "Search Books", data });
@@ -73,7 +73,7 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    var data = await this.bookBL.GetAllBooks();
+                    var data =  this.bookBL.GetAllBooks();
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "All Books", data });
@@ -92,14 +92,14 @@ namespace BookStoreApp.Controllers
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> UpdateBookPrice(UpdateBookModel updateBookModel)
+        public IActionResult UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
             {
                 var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
                 if (claim == "admin")
                 {
-                    var data = await this.bookBL.UpdateBookPrice(updateBookModel);
+                    var data = this.bookBL.UpdateBookPrice(updateBookModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Updated Successfully", data });
@@ -123,14 +123,14 @@ namespace BookStoreApp.Controllers
 
         [HttpDelete]
         [Route("{bookId}")]
-        public async Task<IActionResult> DeleteBook(int bookId)
+        public IActionResult DeleteBook(int bookId)
         {
             try
             {
                 var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
                 if (claim == "admin")
                 {
-                    var data = await this.bookBL.DeleteBook(bookId);
+                    var data = this.bookBL.DeleteBook(bookId);
                     if (data == true)
                     {
                         return this.Ok(new { status = "True", message = "Book Deleted Successfully"});

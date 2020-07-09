@@ -16,7 +16,7 @@ namespace BusinessLayer.Service
         {
             this.bookRL = bookRL;
         }
-        public Task<BookAddModel> AddBook(BookShowModel bookShowModel)
+        public BookAddModel AddBook(BookShowModel bookShowModel)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<List<BookAddModel>> SearchBook(string searchWord)
+        public List<BookAddModel> SearchBook(string searchWord)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace BusinessLayer.Service
         }
 
 
-        public Task<List<BookAddModel>> GetAllBooks()
+        public List<BookAddModel> GetAllBooks()
         {
             try
             {
@@ -54,7 +54,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel)
+        public BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Task<bool> DeleteBook(int bookId)
+        public bool DeleteBook(int bookId)
         {
             try
             {

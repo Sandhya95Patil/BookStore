@@ -9,11 +9,11 @@ namespace BusinessLayer.Interface
 {
     public interface IBookBL
     {
-        Task<BookAddModel> AddBook(BookShowModel bookShowModel);
+        BookAddModel AddBook(BookShowModel bookShowModel);
 
-        Task<List<BookAddModel>> SearchBook(string searchWord);
-        Task<List<BookAddModel>> GetAllBooks();
-        Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel);
-        Task<bool> DeleteBook(int bookId); 
+        List<BookAddModel> SearchBook(string searchWord);
+        List<BookAddModel> GetAllBooks();
+        BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel);
+        bool DeleteBook(int bookId); 
     }
 }

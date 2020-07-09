@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
 {
     public interface IAdminBL
     {
-        Task<ResponseModel> AdminSignUp(ShowModel adminShowModel);
-        Task<LoginResponseModel> AdminLogin(LoginShowModel adminLoginShowModel);
+        ResponseModel AdminSignUp(ShowModel adminShowModel);
+        LoginResponseModel AdminLogin(LoginShowModel adminLoginShowModel);
     }
 }

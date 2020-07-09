@@ -10,8 +10,8 @@ namespace BusinessLayer.Interface
 {
     public interface IUserBL
     {
-        Task<ResponseModel> UserSignUp(ShowModel adminShowModel);
-        Task<LoginResponseModel> UserLogin(LoginShowModel adminLoginShowModel);
+        ResponseModel UserSignUp(ShowModel adminShowModel);
+        LoginResponseModel UserLogin(LoginShowModel adminLoginShowModel);
 
     }
 }

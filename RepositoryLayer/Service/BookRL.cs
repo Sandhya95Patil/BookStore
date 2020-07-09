@@ -18,7 +18,7 @@ namespace RepositoryLayer.Service
         {
             this.configuration = configuration;
         }
-        public async Task<BookAddModel> AddBook(BookShowModel bookShowModel)
+        public  BookAddModel AddBook(BookShowModel bookShowModel)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace RepositoryLayer.Service
                 paramList.Add(new StoredProcedureParameterData("@Pages", bookShowModel.Pages));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));
                 paramList.Add(new StoredProcedureParameterData("@ModifiedDate", DateTime.Now));
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("AddBook", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("AddBook", paramList);
                 var bookData = new BookAddModel();
 
                 foreach (DataRow dataRow in table.Rows)
@@ -59,7 +59,7 @@ namespace RepositoryLayer.Service
         }
 
 
-        public async Task<List<BookAddModel>> SearchBook(string searchWord)
+        public  List<BookAddModel> SearchBook(string searchWord)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchWord));
               
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
+                DataTable table =  databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
                 var bookData = new BookAddModel();
                 List<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
@@ -100,14 +100,14 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<List<BookAddModel>> GetAllBooks()
+        public  List<BookAddModel> GetAllBooks()
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
 
-                DataTable table = await databaseConnection.StoredProcedureExecuteReader("GetAllBooks", paramList);
+                DataTable table =  databaseConnection.StoredProcedureExecuteReader("GetAllBooks", paramList);
                 var bookData = new BookAddModel();
                 List<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
@@ -140,7 +140,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<BookAddModel> UpdateBookPrice(UpdateBookModel updateBookModel)
+        public BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace RepositoryLayer.Service
                 sqlCommand.Parameters.AddWithValue("@BookId", updateBookModel.BookId);
                 sqlCommand.Parameters.AddWithValue("@Price", updateBookModel.Price);
                 sqlConnection.Open();
-                SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync();
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
 
                 BookAddModel bookAddModel = new BookAddModel();
                 while (sqlDataReader.Read())
@@ -180,7 +180,7 @@ namespace RepositoryLayer.Service
             }
         }
 
-        public async Task<bool> DeleteBook(int bookId)
+        public bool DeleteBook(int bookId)
         {
             try
             {
@@ -189,15 +189,15 @@ namespace RepositoryLayer.Service
                 SqlCommand sqlCommand = databaseConnection.GetCommand("DeleteBook", sqlConnection);
                 sqlConnection.Open();
                 sqlCommand.Parameters.AddWithValue("@BookId", bookId);
-                var response = await sqlCommand.ExecuteNonQueryAsync();
+                var response = sqlCommand.ExecuteReader();
                 sqlConnection.Close();
-                if (response > 0)
+                if (response.Equals(0))
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
-                    return false;
+                    return true;
                 }
             }
             catch (Exception e)

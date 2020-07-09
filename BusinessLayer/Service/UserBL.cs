@@ -18,7 +18,7 @@ namespace BusinessLayer.Service
             this.userRL = userRL;
         }
 
-        public Task<ResponseModel> UserSignUp(ShowModel adminShowModel)
+        public ResponseModel UserSignUp(ShowModel adminShowModel)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace BusinessLayer.Service
                 throw new Exception(exception.Message);
             }
         }
-        public Task<LoginResponseModel> UserLogin(LoginShowModel loginShowModel)
+        public LoginResponseModel UserLogin(LoginShowModel loginShowModel)
         {
             try
             {
