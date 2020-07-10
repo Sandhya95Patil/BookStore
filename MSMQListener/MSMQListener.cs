@@ -44,7 +44,7 @@ namespace MSMQListener
         {
             Message message = _queue.EndReceive(e.AsyncResult);
             SMTP.SendMail(message.Body.ToString(), message.Label.ToString());
-            Console.WriteLine("Registartion Successfully Completed" +message.Body.ToString());
+            Console.WriteLine("Mail Sent Your Email Id Please Check  " +message.Body.ToString());
 
             StartListening();
 

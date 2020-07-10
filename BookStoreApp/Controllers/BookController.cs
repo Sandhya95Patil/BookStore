@@ -46,6 +46,7 @@ namespace BookStoreApp.Controllers
                 }
 
             }
+            
             catch (Exception exception)
             {
                 return BadRequest(new { message = exception.Message });

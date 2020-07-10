@@ -39,6 +39,7 @@ namespace RepositoryLayer.Service
                 {
                     purchaseData = new PurchaseResponseModel();
                     purchaseData.Id = Convert.ToInt32(dataRow["Id"]);
+                    purchaseData.CartId = Convert.ToInt32(dataRow["CartId"]);
                     purchaseData.UserId = Convert.ToInt32(dataRow["UserId"].ToString());
                     purchaseData.BookId = Convert.ToInt32(dataRow["BookId"].ToString());
                     purchaseData.Address = dataRow["Address"].ToString().ToString();

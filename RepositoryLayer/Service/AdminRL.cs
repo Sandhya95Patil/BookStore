@@ -1,30 +1,44 @@
-﻿using CommonLayer.Model;
-using CommonLayer.ResponseModel;
-using CommonLayer.ShowModel;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using RepositoryLayer.EncryptedPassword;
-using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RepositoryLayer.Service
+﻿namespace RepositoryLayer.Service
 {
+    using CommonLayer.Model;
+    using CommonLayer.ResponseModel;
+    using CommonLayer.ShowModel;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using RepositoryLayer.EncryptedPassword;
+    using RepositoryLayer.Interface;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+
+    /// <summary>
+    /// Admin class and inherit the interface of admin
+    /// </summary>
     public class AdminRL : IAdminRL
     {
+        /// <summary>
+        /// create field for configuration
+        /// </summary>
         private readonly IConfiguration configuration;
 
+        /// <summary>
+        /// Initialzes the memory and inject the configuration interface 
+        /// </summary>
+        /// <param name="configuration"></param>
         public AdminRL(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
+        /// <summary>
+        /// Admin signup method
+        /// </summary>
+        /// <param name="adminShowModel"></param>
+        /// <returns></returns>
         public ResponseModel AdminSignUp(ShowModel adminShowModel)
         {
             try
@@ -71,29 +85,37 @@ namespace RepositoryLayer.Service
             }
         }
 
+        /// <summary>
+        /// Admin login method
+        /// </summary>
+        /// <param name="adminLoginShowModel"></param>
+        /// <returns></returns>
         public LoginResponseModel AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {
-                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 var password = PasswordEncrypt.Encryptdata(adminLoginShowModel.Password);
-                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
-                paramList.Add(new StoredProcedureParameterData("@Email", adminLoginShowModel.Email));
-                paramList.Add(new StoredProcedureParameterData("@Password", password));
-                DataTable table =  databaseConnection.StoredProcedureExecuteReader("AdminLogin", paramList);
+                DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
+                SqlConnection sqlConnection = databaseConnection.GetConnection();
+                SqlCommand sqlCommand = databaseConnection.GetCommand("AdminLogin", sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@Email", adminLoginShowModel.Email);
+                sqlCommand.Parameters.AddWithValue("@Password", password);
+                sqlConnection.Open();
+                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
                 var userData = new RegisterModel();
-                foreach (DataRow dataRow in table.Rows)
+                while (sqlDataReader.Read())
                 {
                     userData = new RegisterModel();
-                    userData.Id = (int)dataRow["Id"];
-                    userData.FirstName = dataRow["FirstName"].ToString();
-                    userData.LastName = dataRow["LastName"].ToString();
-                    userData.Email = dataRow["Email"].ToString();
-                    userData.Password = dataRow["Password"].ToString();
-                    userData.IsActive = Convert.ToBoolean(dataRow["IsActive"]);
-                    userData.UserRole = dataRow["UserRole"].ToString();
-                    userData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
-                    userData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
+                    userData.Id = (int)sqlDataReader["Id"];
+                    userData.FirstName = sqlDataReader["FirstName"].ToString();
+                    userData.LastName = sqlDataReader["LastName"].ToString();
+                    userData.Email = sqlDataReader["Email"].ToString();
+                    userData.Password = sqlDataReader["Password"].ToString();
+                    userData.IsActive = Convert.ToBoolean(sqlDataReader["IsActive"]);
+                    userData.UserRole = sqlDataReader["UserRole"].ToString();
+                    userData.CreatedDate = Convert.ToDateTime(sqlDataReader["CreatedDate"]);
+                    userData.ModifiedDate = Convert.ToDateTime(sqlDataReader["ModifiedDate"]);
                 }
 
                 if (userData.Email != null)

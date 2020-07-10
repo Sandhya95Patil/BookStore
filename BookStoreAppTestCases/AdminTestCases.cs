@@ -47,18 +47,65 @@ namespace BookStoreAppTestCases
         }
 
         [Fact]
+        public void Given_Admin_Registration_Request_Null_Should_Return_BadRequest()
+        {
+            ShowModel showModel = null;
+            var response = adminController.AdminSignUp(showModel);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
         public void Given_Request_For_Register_Admin_Should_Return_Ok()
         {
             var model = new ShowModel()
             {
-                FirstName = "sandhya",
+                FirstName = "sonu",
                 LastName = "patil",
-                Email = "saurabhnavdkar@gmail.com", 
+                Email = "sonupatil" +DateTime.Now+ "@gmail.com", 
                 Password = "sandhya",
                 IsActive = true
             };
             var response = adminController.AdminSignUp(model);
             Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void Given_Request_For_Register_Admin_AlreadyPresent_Email_Should_Return_BadRequest()
+        {
+            var model = new ShowModel()
+            {
+                FirstName = "sonu",
+                LastName = "patil",
+                Email = "sonupatil@gmail.com",
+                Password = "sonu",
+                IsActive = true
+            };
+            var response = adminController.AdminSignUp(model);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
+        public void Given_Request_For_Admin_Login_Should_Return_Ok()
+        {
+            var model = new LoginShowModel()
+            {
+                Email = "swamimore@gmail.com",
+                Password = "12345",
+            };
+            var response = adminController.AdminLogin(model);
+            Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void Given_Request_For_Admin_Login_Not_Provide_Email_Then_Return_NotOK()
+        {
+            var model = new LoginShowModel()
+            {
+                Email = "",
+                Password = "12345",
+            };
+            var response = adminController.AdminLogin(model);
+            Assert.IsType<BadRequestObjectResult>(response);
         }
     }
 }

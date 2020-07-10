@@ -12,7 +12,6 @@ namespace BookStoreApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AdminController : ControllerBase
     {
         IAdminBL adminBL; 
@@ -23,7 +22,6 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("SignUp")]
-        [AllowAnonymous]
         public IActionResult AdminSignUp(ShowModel adminShowModel)
         {
             try
@@ -46,12 +44,11 @@ namespace BookStoreApp.Controllers
 
         [HttpPost]
         [Route("Login")]
-        [AllowAnonymous]
         public IActionResult AdminLogin(LoginShowModel adminLoginShowModel)
         {
             try
             {
-                var data =  this.adminBL.AdminLogin(adminLoginShowModel);
+                var data = this.adminBL.AdminLogin(adminLoginShowModel);
                 if (data != null)
                 {
                     return this.Ok(new { status = "True", message = "Login Successfully", data });

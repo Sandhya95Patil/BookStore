@@ -13,11 +13,25 @@ namespace RepositoryLayer.Service
 {
     public class BookRL : IBookRL
     {
+        /// <summary>
+        /// create field for configuration 
+        /// </summary>
         private readonly IConfiguration configuration;
+
+        /// <summary>
+        /// Initialzes the memory and inject the configuration interface
+        /// </summary>
+        /// <param name="configuration"></param>
         public BookRL(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
+
+        /// <summary>
+        /// add book
+        /// </summary>
+        /// <param name="bookShowModel"></param>
+        /// <returns></returns>
         public  BookAddModel AddBook(BookShowModel bookShowModel)
         {
             try
@@ -58,7 +72,11 @@ namespace RepositoryLayer.Service
             }
         }
 
-
+        /// <summary>
+        /// search books by book title
+        /// </summary>
+        /// <param name="searchWord"></param>
+        /// <returns></returns>
         public  List<BookAddModel> SearchBook(string searchWord)
         {
             try
@@ -100,6 +118,10 @@ namespace RepositoryLayer.Service
             }
         }
 
+        /// <summary>
+        /// get all books 
+        /// </summary>
+        /// <returns></returns>
         public  List<BookAddModel> GetAllBooks()
         {
             try
@@ -140,6 +162,11 @@ namespace RepositoryLayer.Service
             }
         }
 
+        /// <summary>
+        /// update book by book price
+        /// </summary>
+        /// <param name="updateBookModel"></param>
+        /// <returns></returns>
         public BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
@@ -179,7 +206,11 @@ namespace RepositoryLayer.Service
                 throw new Exception(e.Message);
             }
         }
-
+        /// <summary>
+        /// delete book
+        /// </summary>
+        /// <param name="bookId"></param>
+        /// <returns></returns>
         public bool DeleteBook(int bookId)
         {
             try

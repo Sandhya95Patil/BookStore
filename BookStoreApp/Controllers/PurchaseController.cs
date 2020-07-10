@@ -7,6 +7,7 @@ using CommonLayer.ShowModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RepositoryLayer.MSMQ;
 
 namespace BookStoreApp.Controllers
 {
@@ -31,6 +32,9 @@ namespace BookStoreApp.Controllers
                     var data = this.purchaseBL.BookPurchase(claim, showPurchaseBookModel);
                     if (data != null)
                     {
+                        var email=HttpContext.User.Claims.FirstOrDefault(c=>c.Type=="Email").Value;
+                        MSMQSender mSMQSender = new MSMQSender();
+                        mSMQSender.Message(email);
                         return this.Ok(new { status = "True", message = "Book Orderd Successfully", data });
                     }
                     else

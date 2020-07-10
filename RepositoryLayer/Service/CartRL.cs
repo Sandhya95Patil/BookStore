@@ -1,23 +1,40 @@
-﻿using CommonLayer.Model;
-using CommonLayer.ShowModel;
-using Microsoft.Extensions.Configuration;
-using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace RepositoryLayer.Service
 {
+    using CommonLayer.Model;
+    using CommonLayer.ShowModel;
+    using Microsoft.Extensions.Configuration;
+    using RepositoryLayer.Interface;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+
+    /// <summary>
+    /// cart class
+    /// </summary>
     public class CartRL : ICartRL
     {
+        /// <summary>
+        /// create field for configuration
+        /// </summary>
         IConfiguration configuration;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
         public CartRL(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
+
+        /// <summary>
+        /// add cart
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="showCartModel"></param>
+        /// <returns></returns>
         public  AddCart AddCart(int userId, ShowCartModel showCartModel)
         {
             try
