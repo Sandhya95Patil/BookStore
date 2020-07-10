@@ -31,18 +31,50 @@ namespace BookStoreAppTestCases
         }
 
         [Fact]
-        public void Given_Request_For_Register_Admin_Should_Return_Ok()
+        public void User_Registration_ValidData_Return_Ok()
         {
-            var model = new ShowModel()
+            var data = new ShowModel()
             {
-                FirstName = "sonu",
-                LastName = "patil",
-                Email = "sonupatil" + DateTime.Now + "@gmail.com",
-                Password = "sandhya",
+                FirstName = "abc",
+                LastName = "xyz",
+                Email = "abc" + DateTime.Now + "@gmail.com",
+                Password = "abc12",
                 IsActive = true
             };
-            var response = userController.UserSignUp(model);
+            var response = userController.UserSignUp(data);
             Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void User_Registration_Data_Null_Return_BadRequest()
+        {
+            ShowModel data = null;          
+            var response = userController.UserSignUp(data);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
+        public void User_Login_ValidData_Return_Ok()
+        {
+            var data = new LoginShowModel()
+            {
+                Email = "yashmore@gmail.com",
+                Password = "12345"
+            };
+            var response = userController.UserLogin(data);
+            Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void User_Login_EmptyFields_Return_Ok()
+        {
+            var data = new LoginShowModel()
+            {
+                Email = "",
+                Password = ""
+            };
+            var response = userController.UserLogin(data);
+            Assert.IsType<BadRequestObjectResult>(response);
         }
     }
 }
