@@ -1,22 +1,31 @@
-﻿using BookStoreApp.Controllers;
-using BusinessLayer.Interface;
-using BusinessLayer.Service;
-using CommonLayer.ShowModel;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using RepositoryLayer.Interface;
-using RepositoryLayer.Service;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookTestCases.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BookStoreAppTestCases
 {
+    using BookStoreApp.Controllers;
+    using BusinessLayer.Interface;
+    using BusinessLayer.Service;
+    using CommonLayer.Model;
+    using CommonLayer.ShowModel;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Moq;
+    using RepositoryLayer.Interface;
+    using RepositoryLayer.Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading;
+    using Xunit;
+
+    /// <summary>
+    /// Book tests class
+    /// </summary>
     public class BookTestCases
     {
         BookController bookController;
@@ -24,10 +33,9 @@ namespace BookStoreAppTestCases
         IBookRL bookRL;
         public IConfiguration configuration;
 
-        //private HttpResponseMessage response;
-
-      //  private string token;
-
+        /// <summary>
+        /// Initializes the instances for test cases
+        /// </summary>
         public BookTestCases()
         {
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -36,23 +44,55 @@ namespace BookStoreAppTestCases
             this.bookRL = new BookRL(this.configuration);
             this.bookBL = new BookBL(this.bookRL);
             this.bookController = new BookController(this.bookBL);
+
+       
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void Given_AddBook_Data_Valid()
+        {
+            var contextMock = new Mock<HttpContext>();
+            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal());
+            bookController.ControllerContext.HttpContext = contextMock.Object;
+            Assert.NotNull(bookController.User);
+            var data = new BookShowModel()
+            {
+                BooKTitle = "mvc",
+                Author = "microsoft",
+                Language = "English",
+                Category = "Tech",
+                ISBN=1290,
+                Price=123,
+                Pages=123
+            };
+            var response = bookController.AddBook(data);
+            Assert.IsType<OkObjectResult>(response);
         }
 
         [Fact]
-        public void Given_AddBook_Request_Should_Return_Ok()
+        public void GetAllBooks()
         {
-            var model = new BookShowModel()
-            {
-                BooKTitle="Agnipankh",
-                Author="Abdul Kalam",
-                Language="Marathi",
-                Category="Motivational",
-                ISBN=6789,
-                Price=234,
-                Pages=250
-            };
-            var response = bookController.AddBook(model);
-            Assert.IsType<OkObjectResult>(response);
+            var searchWord = "asp";
+            var response = bookController.SearchBook(searchWord) as OkObjectResult;
+            var items=Assert.IsType<List<BookAddModel>>(response.Value);
+            Assert.Equal(3, items.Count);
         }
     }
+
+/*    public class TestPrincipal : ClaimsPrincipal
+    {
+        public TestPrincipal(params Claim[] claims) : base(new TestIdentity(claims))
+        {
+        }
+    }
+
+    public class TestIdentity : ClaimsIdentity
+    {
+        public TestIdentity(params Claim[] claims) : base(claims)
+        {
+        }
+    }*/
 }

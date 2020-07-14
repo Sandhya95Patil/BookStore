@@ -1,6 +1,13 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookController.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLayer.Interface;
 using CommonLayer.ShowModel;

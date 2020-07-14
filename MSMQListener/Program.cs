@@ -1,6 +1,9 @@
-﻿using Experimental.System.Messaging;
-using System;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//---------------------------------------------------------------------
 namespace MSMQListener
 {
 

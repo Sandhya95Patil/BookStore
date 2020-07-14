@@ -1,12 +1,14 @@
-﻿using CommonLayer.ResponseModel;
-using CommonLayer.ShowModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="IAdminBL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BusinessLayer.Interface
 {
+    using CommonLayer.ResponseModel;
+    using CommonLayer.ShowModel;
+
     public interface IAdminBL
     {
         ResponseModel AdminSignUp(ShowModel adminShowModel);

@@ -1,16 +1,23 @@
-﻿using CommonLayer.Model;
-using CommonLayer.ShowModel;
-using Microsoft.Extensions.Configuration;
-using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookRL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace RepositoryLayer.Service
 {
+    using CommonLayer.Model;
+    using CommonLayer.ShowModel;
+    using Microsoft.Extensions.Configuration;
+    using RepositoryLayer.Interface;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+
+    /// <summary>
+    /// Book class
+    /// </summary>
     public class BookRL : IBookRL
     {
         /// <summary>

@@ -1,15 +1,20 @@
-﻿using BusinessLayer.Interface;
-using CommonLayer.Model;
-using CommonLayer.ResponseModel;
-using CommonLayer.ShowModel;
-using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="UserBL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BusinessLayer.Service
 {
+    using BusinessLayer.Interface;
+    using CommonLayer.ResponseModel;
+    using CommonLayer.ShowModel;
+    using RepositoryLayer.Interface;
+    using System;
+
+    /// <summary>
+    /// User class
+    /// </summary>
     public class UserBL : IUserBL
     {
         IUserRL userRL;
@@ -18,6 +23,11 @@ namespace BusinessLayer.Service
             this.userRL = userRL;
         }
 
+        /// <summary>
+        /// user sign up method
+        /// </summary>
+        /// <param name="adminShowModel"></param>
+        /// <returns></returns>
         public ResponseModel UserSignUp(ShowModel adminShowModel)
         {
             try

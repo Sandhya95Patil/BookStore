@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLayer.Interface;
-using BusinessLayer.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using RepositoryLayer.Interface;
-using RepositoryLayer.Service;
-using Swashbuckle.AspNetCore.Swagger;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Startup.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BookStoreApp
 {
+    using System.Text;
+    using BusinessLayer.Interface;
+    using BusinessLayer.Service;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
+    using RepositoryLayer.Interface;
+    using RepositoryLayer.Service;
+    using Swashbuckle.AspNetCore.Swagger;
+
+    /// <summary>
+    /// Startup class
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -50,7 +52,7 @@ namespace BookStoreApp
 
             services.AddTransient<IPurchaseBL, PurchaseBL>();
             services.AddTransient<IPurchaseRL, PurchaseRL>();
-            
+
             ////This is For Swagger Generaion
             services.AddSwaggerGen(c =>
             {

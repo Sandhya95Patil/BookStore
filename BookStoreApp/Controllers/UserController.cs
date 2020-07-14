@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLayer.Interface;
-using CommonLayer.ShowModel;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="UserController.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BookStoreApp.Controllers
 {
+    using System;
+    using BusinessLayer.Interface;
+    using CommonLayer.ShowModel;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -20,6 +22,12 @@ namespace BookStoreApp.Controllers
         {
             this.userBL = userBL;
         }
+
+        /// <summary>
+        /// User SignUp method
+        /// </summary>
+        /// <param name="showModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("SignUp")]
         [AllowAnonymous]
@@ -43,6 +51,11 @@ namespace BookStoreApp.Controllers
             }
         }
 
+        /// <summary>
+        /// user login method
+        /// </summary>
+        /// <param name="loginShowModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
@@ -57,7 +70,7 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Failed To Login" });
+                    return this.NotFound(new { status = "False", message = "Failed To Login" });
                 }
             }
             catch (Exception exception)

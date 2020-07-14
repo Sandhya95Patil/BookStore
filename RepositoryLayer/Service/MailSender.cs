@@ -1,13 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="MailSender.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace RepositoryLayer.Service
 {
+    using System;
+    using System.Net;
+    using System.Net.Mail;
+
+    /// <summary>
+    /// mail sender class
+    /// </summary>
     public class MailSender
     {
+        /// <summary>
+        /// Send mail
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="email"></param>
         public void SendMail(string data, string email)
         {
             try

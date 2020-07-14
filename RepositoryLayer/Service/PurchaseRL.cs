@@ -1,15 +1,22 @@
-﻿using CommonLayer.ResponseModel;
-using CommonLayer.ShowModel;
-using Microsoft.Extensions.Configuration;
-using RepositoryLayer.Interface;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="PurchaseRL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace RepositoryLayer.Service
 {
+    using CommonLayer.ResponseModel;
+    using CommonLayer.ShowModel;
+    using Microsoft.Extensions.Configuration;
+    using RepositoryLayer.Interface;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+
+    /// <summary>
+    /// purchase class
+    /// </summary>
     public class PurchaseRL : IPurchaseRL
     {
         IConfiguration configuration;
@@ -18,6 +25,12 @@ namespace RepositoryLayer.Service
             this.configuration = configuration;
         }
 
+        /// <summary>
+        /// purchase book method
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="showPurchaseModel"></param>
+        /// <returns></returns>
         public PurchaseResponseModel BookPurchase(int userId, ShowPurchaseBookModel showPurchaseModel)
         {
             try
@@ -47,7 +60,14 @@ namespace RepositoryLayer.Service
                     purchaseData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
                     purchaseData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
                 }
-                return purchaseData;
+                if (purchaseData.CartId > 0)
+                {
+                    return purchaseData;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception exception)
             {

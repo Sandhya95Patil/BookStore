@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLayer.Interface;
-using CommonLayer.ShowModel;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="WishListController.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BookStoreApp.Controllers
 {
+    using System;
+    using System.Linq;
+    using BusinessLayer.Interface;
+    using CommonLayer.ShowModel;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
+    /// <summary>
+    /// Wish list controller 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

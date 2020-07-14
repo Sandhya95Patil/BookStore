@@ -1,21 +1,26 @@
-﻿using CommonLayer.Model;
-using CommonLayer.ResponseModel;
-using CommonLayer.ShowModel;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using RepositoryLayer.EncryptedPassword;
-using RepositoryLayer.Interface;
-using RepositoryLayer.MSMQ;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="UserRL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace RepositoryLayer.Service
 {
+    using CommonLayer.Model;
+    using CommonLayer.ResponseModel;
+    using CommonLayer.ShowModel;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using RepositoryLayer.EncryptedPassword;
+    using RepositoryLayer.Interface;
+    using RepositoryLayer.MSMQ;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+
     public class UserRL : IUserRL
     {
         IConfiguration configuration;
@@ -24,7 +29,11 @@ namespace RepositoryLayer.Service
             this.configuration = configuration;
         }
 
-
+        /// <summary>
+        /// user signup method
+        /// </summary>
+        /// <param name="adminShowModel"></param>
+        /// <returns></returns>
         public ResponseModel UserSignUp(ShowModel adminShowModel)
         {
             try
@@ -73,7 +82,11 @@ namespace RepositoryLayer.Service
             }
         }
 
-
+        /// <summary>
+        /// user login method
+        /// </summary>
+        /// <param name="loginShowModel"></param>
+        /// <returns></returns>
         public LoginResponseModel UserLogin(LoginShowModel loginShowModel)
         {
             try

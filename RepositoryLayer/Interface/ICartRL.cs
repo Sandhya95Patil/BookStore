@@ -1,12 +1,18 @@
-﻿using CommonLayer.Model;
-using CommonLayer.ShowModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ICartRL.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace RepositoryLayer.Interface
 {
+    using CommonLayer.Model;
+    using CommonLayer.ShowModel;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// interface of cart 
+    /// </summary>
     public interface ICartRL
     {
         AddCart AddCart(int userId, ShowCartModel showCartModel);

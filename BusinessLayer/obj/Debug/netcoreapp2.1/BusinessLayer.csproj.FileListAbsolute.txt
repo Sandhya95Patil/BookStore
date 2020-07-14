@@ -1,6 +1,3 @@
-C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.AssemblyInfoInputs.cache
-C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.AssemblyInfo.cs
-C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.csproj.CoreCompileInputs.cache
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\BusinessLayer.deps.json
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\BusinessLayer.dll
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\BusinessLayer.pdb
@@ -9,6 +6,9 @@ C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\CommonLayer.pdb
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\bin\Debug\netcoreapp2.1\RepositoryLayer.pdb
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.csprojAssemblyReference.cache
+C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.AssemblyInfoInputs.cache
+C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.AssemblyInfo.cs
+C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.csproj.CoreCompileInputs.cache
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.csproj.CopyComplete
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.dll
 C:\Users\Sanbhy\source\repos\BookStoreApp\BusinessLayer\obj\Debug\netcoreapp2.1\BusinessLayer.pdb

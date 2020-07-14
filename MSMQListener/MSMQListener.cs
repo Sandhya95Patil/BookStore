@@ -1,10 +1,14 @@
-﻿using Experimental.System.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="MSMQListener.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//---------------------------------------------------------------------
 namespace MSMQListener
 {
+    using Experimental.System.Messaging;
+    using System;
+
     public delegate void MessageReceivedEventhandler(object sender, MessageEventArgs args);
 
     public class MSMQListener
@@ -44,7 +48,7 @@ namespace MSMQListener
         {
             Message message = _queue.EndReceive(e.AsyncResult);
             SMTP.SendMail(message.Body.ToString(), message.Label.ToString());
-            Console.WriteLine("Mail Sent Your Email Id Please Check  " +message.Body.ToString());
+            Console.WriteLine("Mail Sent To Your Email Id Please Check  " +message.Body.ToString());
 
             StartListening();
 

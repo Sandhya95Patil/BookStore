@@ -1,7 +1,10 @@
-﻿using Experimental.System.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MSMQSender.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
+using Experimental.System.Messaging;
 
 namespace RepositoryLayer.MSMQ
 {

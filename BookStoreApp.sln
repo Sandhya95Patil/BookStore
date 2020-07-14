@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryLayer", "Reposito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSMQListener", "MSMQListener\MSMQListener.csproj", "{3F57615D-A07F-4EF6-8E84-04C99D07B249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStoreAppTestCases", "BookStoreAppTestCases\BookStoreAppTestCases.csproj", "{4DDD9D3D-87F3-4B73-A789-B6B13BB297C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStoreAppTestCases", "BookStoreAppTestCases\BookStoreAppTestCases.csproj", "{4DDD9D3D-87F3-4B73-A789-B6B13BB297C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

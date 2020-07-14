@@ -1,13 +1,15 @@
-﻿using MailKit.Net.Smtp;
-using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="SMTP.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//---------------------------------------------------------------------
 namespace MSMQListener
 {
+    using System;
+    using System.Net;
+    using System.Net.Mail;
+
     public class SMTP
     {
         public static bool SendMail(string data, string email)
@@ -17,10 +19,10 @@ namespace MSMQListener
                 if (!string.IsNullOrWhiteSpace(email))
                 {
 
-                    string FROMNAME = "Sandhya", FROM = "sandhyapatil364@gmail.com", TO = email, SUBJECT = "Register";
+                    string FROMNAME = "Sandhya", FROM = "sandhyapatil364@gmail.com", TO = email, SUBJECT = "Registration";
                     int PORT = 587;
-                    string message = "Your Registration Successfull";
-                    var BODY = "Hello," + message;
+                    string message = "Your Registration Successfully Completed";
+                    var BODY = "Hi , " + message;
 
                     MailMessage mailMessage = new MailMessage();
                     System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com", PORT);
@@ -28,7 +30,6 @@ namespace MSMQListener
                     mailMessage.To.Add(new MailAddress(TO));
                     mailMessage.Subject = SUBJECT;
                     mailMessage.Body = BODY;
-
                     client.Credentials = new NetworkCredential(FROM, "Sandhya@1995");
                     client.EnableSsl = true;
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;

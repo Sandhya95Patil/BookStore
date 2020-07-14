@@ -1,18 +1,25 @@
-﻿using BookStoreApp.Controllers;
-using BusinessLayer.Interface;
-using BusinessLayer.Service;
-using CommonLayer.ShowModel;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using RepositoryLayer.Interface;
-using RepositoryLayer.Service;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookTestCases.cs" company="BridgeLabz Solution">
+//  Copyright (c) BridgeLabz Solution. All rights reserved.
+// </copyright>
+// <author>Sandhya Patil</author>
+//-----------------------------------------------------------------------
 namespace BookStoreAppTestCases
 {
+    using BookStoreApp.Controllers;
+    using BusinessLayer.Interface;
+    using BusinessLayer.Service;
+    using CommonLayer.ShowModel;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using RepositoryLayer.Interface;
+    using RepositoryLayer.Service;
+    using System;
+    using Xunit;
+
+    /// <summary>
+    /// user test cases
+    /// </summary>
     public class UserTestCases
     {
         UserController userController;
@@ -30,14 +37,17 @@ namespace BookStoreAppTestCases
             this.userController = new UserController(this.userBL);
         }
 
+        /// <summary>
+        /// given user registration valid data return ok
+        /// </summary>
         [Fact]
-        public void User_Registration_ValidData_Return_Ok()
+        public void Given_User_Registration_ValidData_Return_Ok()
         {
             var data = new ShowModel()
             {
                 FirstName = "abc",
                 LastName = "xyz",
-                Email = "abc" + DateTime.Now + "@gmail.com",
+                Email = "abc" +DateTime.Now+ "@gmail.com",
                 Password = "abc12",
                 IsActive = true
             };
@@ -45,6 +55,9 @@ namespace BookStoreAppTestCases
             Assert.IsType<OkObjectResult>(response);
         }
 
+        /// <summary>
+        /// given user registration data null then return bad request
+        /// </summary>
         [Fact]
         public void User_Registration_Data_Null_Return_BadRequest()
         {
@@ -53,6 +66,9 @@ namespace BookStoreAppTestCases
             Assert.IsType<BadRequestObjectResult>(response);
         }
 
+        /// <summary>
+        /// given user login vali data return ok
+        /// </summary>
         [Fact]
         public void User_Login_ValidData_Return_Ok()
         {
@@ -65,8 +81,11 @@ namespace BookStoreAppTestCases
             Assert.IsType<OkObjectResult>(response);
         }
 
+        /// <summary>
+        /// user login empty fields return bad request
+        /// </summary>
         [Fact]
-        public void User_Login_EmptyFields_Return_Ok()
+        public void User_Login_EmptyFields_Return_BadRequest()
         {
             var data = new LoginShowModel()
             {
