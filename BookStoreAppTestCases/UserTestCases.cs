@@ -34,7 +34,7 @@ namespace BookStoreAppTestCases
             this.configuration = configurationBuilder.Build();
             this.userRL = new UserRL(this.configuration);
             this.userBL = new UserBL(this.userRL);
-            this.userController = new UserController(this.userBL);
+            this.userController = new UserController(this.userBL, configuration);
         }
 
         /// <summary>

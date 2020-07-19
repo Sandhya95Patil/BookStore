@@ -126,7 +126,7 @@ namespace RepositoryLayer.Service
 
                     if (userData.Email != null)
                     {
-                        if (password.Equals(userData.Password))
+                 /*       if (password.Equals(userData.Password))
                         {
                             ////Here generate encrypted key and result store in security key
                             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:token"]));
@@ -144,7 +144,7 @@ namespace RepositoryLayer.Service
                                 DateTime.UtcNow,
                                 expires: DateTime.Now.AddDays(1),
                                 signingCredentials: creadintials);
-                            var returnToken = new JwtSecurityTokenHandler().WriteToken(token);
+                            var returnToken = new JwtSecurityTokenHandler().WriteToken(token);*/
 
                             var responseShow = new LoginResponseModel()
                             {
@@ -156,7 +156,6 @@ namespace RepositoryLayer.Service
                                 UserRole = userData.UserRole,
                                 CreatedDate = userData.CreatedDate,
                                 ModifiedDate = userData.ModifiedDate,
-                                Token = returnToken
                             };
                             return responseShow;
                         }
@@ -164,11 +163,6 @@ namespace RepositoryLayer.Service
                         {
                             return null;
                         }
-                    }
-                    else
-                    {
-                        return null;
-                    }
             }
             catch (Exception e)
             {

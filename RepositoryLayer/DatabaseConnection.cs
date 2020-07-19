@@ -11,6 +11,7 @@ namespace RepositoryLayer
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// database connection class
@@ -67,6 +68,29 @@ namespace RepositoryLayer
                 connection.Open();
                 DataTable table = new DataTable();
                 SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                table.Load(dataReader);
+                connection.Close();
+                return table;
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        public async Task<DataTable> StoredProcedureExecuteReaderAsync(string spName, IList<StoredProcedureParameterData> spParams)
+        {
+            try
+            {
+                SqlConnection connection = GetConnection();
+                SqlCommand sqlCommand = GetCommand(spName, connection);
+                for (int i = 0; i < spParams.Count; i++)
+                {
+                    sqlCommand.Parameters.AddWithValue(spParams[i].name, spParams[i].value);
+                }
+                connection.Open();
+                DataTable table = new DataTable();
+                SqlDataReader dataReader = await sqlCommand.ExecuteReaderAsync();
                 table.Load(dataReader);
                 connection.Close();
                 return table;

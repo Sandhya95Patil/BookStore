@@ -14,6 +14,8 @@ namespace RepositoryLayer.Service
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Book class
@@ -78,13 +80,13 @@ namespace RepositoryLayer.Service
                 throw new Exception(exception.Message);
             }
         }
-
+  
         /// <summary>
         /// search books by book title
         /// </summary>
         /// <param name="searchWord"></param>
         /// <returns></returns>
-        public  List<BookAddModel> SearchBook(string searchWord)
+        public async Task<IList<BookAddModel>> SearchBook(string searchWord)
         {
             try
             {
@@ -92,7 +94,7 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchWord));
               
-                DataTable table =  databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
+                DataTable table =  await databaseConnection.StoredProcedureExecuteReaderAsync("SearchBookByTitle", paramList);
                 var bookData = new BookAddModel();
                 List<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
@@ -101,6 +103,7 @@ namespace RepositoryLayer.Service
                     bookData.Id = (int)dataRow["Id"];
                     bookData.BooKTitle = dataRow["Book_Title"].ToString();
                     bookData.Author = dataRow["Author"].ToString();
+                    
                     bookData.Language = dataRow["Language"].ToString();
                     bookData.Category = dataRow["Category"].ToString();
                     bookData.ISBN = Convert.ToInt32(dataRow["ISBN_No"]);
@@ -112,7 +115,7 @@ namespace RepositoryLayer.Service
                 }
                 if (bookList != null)
                 {
-                    return bookList;
+                    return bookList.ToList();
                 }
                 else
                 {
@@ -129,16 +132,16 @@ namespace RepositoryLayer.Service
         /// get all books 
         /// </summary>
         /// <returns></returns>
-        public  List<BookAddModel> GetAllBooks()
+        public async Task<IList<BookAddModel>> GetAllBooks()
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
-                List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
+                IList<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
 
-                DataTable table =  databaseConnection.StoredProcedureExecuteReader("GetAllBooks", paramList);
+                DataTable table = await databaseConnection.StoredProcedureExecuteReaderAsync("GetAllBooks", paramList);
                 var bookData = new BookAddModel();
-                List<BookAddModel> bookList = new List<BookAddModel>();
+                IList<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
                 {
                     bookData = new BookAddModel();
@@ -156,7 +159,7 @@ namespace RepositoryLayer.Service
                 }
                 if (bookList != null)
                 {
-                    return bookList;
+                    return bookList.ToList();
                 }
                 else
                 {

@@ -38,7 +38,7 @@ namespace BookStoreAppTestCases
             this.configuration = configurationBuilder.Build();
             this.adminRL = new AdminRL(this.configuration);
             this.adminBL = new AdminBL(this.adminRL);
-            this.adminController = new AdminController(this.adminBL);
+            this.adminController = new AdminController(this.adminBL, configuration);
         }
 
         /// <summary>

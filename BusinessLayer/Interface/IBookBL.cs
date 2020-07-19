@@ -11,8 +11,8 @@ namespace BusinessLayer.Interface
     {
         BookAddModel AddBook(BookShowModel bookShowModel);
 
-        List<BookAddModel> SearchBook(string searchWord);
-        List<BookAddModel> GetAllBooks();
+        Task<IList<BookAddModel>> SearchBook(string searchWord);
+        Task<IList<BookAddModel>> GetAllBooks();
         BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel);
         bool DeleteBook(int bookId); 
     }

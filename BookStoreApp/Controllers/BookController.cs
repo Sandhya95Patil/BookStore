@@ -13,6 +13,7 @@ using BusinessLayer.Interface;
 using CommonLayer.ShowModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreApp.Controllers
@@ -28,16 +29,16 @@ namespace BookStoreApp.Controllers
             this.bookBL = bookBL;
         }
 
+        [Authorize(Roles ="admin")]
         [HttpPost]
         [Route("")]
         public IActionResult AddBook(BookShowModel bookShowModel)
         {
             try
             {
-                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
-                if (claim == "admin")
+                if (bookShowModel != null)
                 {
-                    var data =  this.bookBL.AddBook(bookShowModel);
+                    var data = this.bookBL.AddBook(bookShowModel);
                     if (data != null)
                     {
                         return this.Ok(new { status = "True", message = "Book Added Successfully", data });
@@ -49,9 +50,8 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Add Book" });
-                }
-
+                    return this.BadRequest(new { status = "False", message = "Failed To Add Book" });
+                }   
             }
             
             catch (Exception exception)
@@ -63,13 +63,13 @@ namespace BookStoreApp.Controllers
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public IActionResult SearchBook([FromQuery]string searchWord)
+        public async Task<IActionResult> SearchBook([FromQuery]string searchWord)
         {
             try
             {
                 if (searchWord != null)
                 {
-                    var data =  this.bookBL.SearchBook(searchWord);
+                    var data = await this.bookBL.SearchBook(searchWord);
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "Search Books", data });
@@ -81,7 +81,7 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    var data =  this.bookBL.GetAllBooks();
+                    var data = await this.bookBL.GetAllBooks();
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "All Books", data });

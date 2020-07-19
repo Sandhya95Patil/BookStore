@@ -54,10 +54,6 @@ namespace BookStoreAppTestCases
         [Fact]
         public void Given_AddBook_Data_Valid()
         {
-            var contextMock = new Mock<HttpContext>();
-            contextMock.Setup(x => x.User).Returns(new ClaimsPrincipal());
-            bookController.ControllerContext.HttpContext = contextMock.Object;
-            Assert.NotNull(bookController.User);
             var data = new BookShowModel()
             {
                 BooKTitle = "mvc",
@@ -73,26 +69,20 @@ namespace BookStoreAppTestCases
         }
 
         [Fact]
-        public void GetAllBooks()
+        public void Given_AddBook_DataNull_Return_BadRequest()
         {
-            var searchWord = "asp";
-            var response = bookController.SearchBook(searchWord) as OkObjectResult;
+            BookShowModel data = null;
+            var response = bookController.AddBook(data);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task GetAllBooksAsync()
+        {
+            string searchWord = null;
+            var response =await bookController.SearchBook(searchWord) as OkObjectResult;
             var items=Assert.IsType<List<BookAddModel>>(response.Value);
             Assert.Equal(3, items.Count);
         }
     }
-
-/*    public class TestPrincipal : ClaimsPrincipal
-    {
-        public TestPrincipal(params Claim[] claims) : base(new TestIdentity(claims))
-        {
-        }
-    }
-
-    public class TestIdentity : ClaimsIdentity
-    {
-        public TestIdentity(params Claim[] claims) : base(claims)
-        {
-        }
-    }*/
 }

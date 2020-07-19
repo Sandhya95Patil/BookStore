@@ -9,6 +9,7 @@ namespace RepositoryLayer.Interface
     using CommonLayer.Model;
     using CommonLayer.ShowModel;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Interface of book 
@@ -16,8 +17,8 @@ namespace RepositoryLayer.Interface
     public interface IBookRL
     {
         BookAddModel AddBook(BookShowModel bookShowModel);
-        List<BookAddModel> SearchBook(string searchWord);
-        List<BookAddModel> GetAllBooks();
+        Task<IList<BookAddModel>> SearchBook(string searchWord);
+        Task<IList<BookAddModel>> GetAllBooks();
         BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel);
         bool DeleteBook(int bookId);
 

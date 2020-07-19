@@ -111,30 +111,8 @@ namespace RepositoryLayer.Service
                     userData.CreatedDate = Convert.ToDateTime(dataRow["CreatedDate"]);
                     userData.ModifiedDate = Convert.ToDateTime(dataRow["ModifiedDate"]);
                 }
-
                 if (userData.Email != null)
                 {
-                    if (password.Equals(userData.Password))
-                    {
-                        ////Here generate encrypted key and result store in security key
-                        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:token"]));
-
-                        //// here using securitykey and algorithm(security) the credentials is generate(SigningCredentials present in Token)
-                        var creadintials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                        var claims = new[] {
-                         new Claim ("Id", userData.Id.ToString()),
-                         new Claim("Email", userData.Email.ToString()),
-                         new Claim("Password", userData.Password.ToString()),
-                         new Claim("UserRole", userData.UserRole.ToString())
-                        };
-
-                        var token = new JwtSecurityToken("Security token", "https://Test.com",
-                            claims,
-                            DateTime.UtcNow,
-                            expires: DateTime.Now.AddDays(1),
-                            signingCredentials: creadintials);
-                        var returnToken = new JwtSecurityTokenHandler().WriteToken(token);
-
                         var responseShow = new LoginResponseModel()
                         {
                             Id = userData.Id,
@@ -145,7 +123,6 @@ namespace RepositoryLayer.Service
                             UserRole = userData.UserRole,
                             CreatedDate = userData.CreatedDate,
                             ModifiedDate = userData.ModifiedDate,
-                            Token = returnToken
                         };
                         return responseShow;
                     }
@@ -153,11 +130,6 @@ namespace RepositoryLayer.Service
                     {
                         return null;
                     }
-                }
-                else
-                {
-                    return null;
-                }
             }
             catch (Exception e)
             {

@@ -12,6 +12,7 @@ namespace BusinessLayer.Service
     using RepositoryLayer.Interface;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Book class
@@ -36,11 +37,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public List<BookAddModel> SearchBook(string searchWord)
+        public async Task<IList<BookAddModel>> SearchBook(string searchWord)
         {
             try
             {
-               return  this.bookRL.SearchBook(searchWord);
+               return await this.bookRL.SearchBook(searchWord);
             }
             catch (Exception exception)
             {
@@ -49,11 +50,11 @@ namespace BusinessLayer.Service
         }
 
 
-        public List<BookAddModel> GetAllBooks()
+        public async Task<IList<BookAddModel>> GetAllBooks()
         {
             try
             {
-                return this.bookRL.GetAllBooks();
+                return await this.bookRL.GetAllBooks();
             }
             catch (Exception exception)
             {
