@@ -37,11 +37,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public async Task<IList<BookAddModel>> SearchBook(string searchWord)
+        public IList<BookAddModel> SearchBook(string searchWord)
         {
             try
             {
-               return await this.bookRL.SearchBook(searchWord);
+               return this.bookRL.SearchBook(searchWord);
             }
             catch (Exception exception)
             {
@@ -50,11 +50,11 @@ namespace BusinessLayer.Service
         }
 
 
-        public async Task<IList<BookAddModel>> GetAllBooks()
+        public IList<BookAddModel> GetAllBooks()
         {
             try
             {
-                return await this.bookRL.GetAllBooks();
+                return this.bookRL.GetAllBooks();
             }
             catch (Exception exception)
             {

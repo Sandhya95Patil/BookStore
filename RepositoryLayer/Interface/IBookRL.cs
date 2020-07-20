@@ -17,8 +17,8 @@ namespace RepositoryLayer.Interface
     public interface IBookRL
     {
         BookAddModel AddBook(BookShowModel bookShowModel);
-        Task<IList<BookAddModel>> SearchBook(string searchWord);
-        Task<IList<BookAddModel>> GetAllBooks();
+        IList<BookAddModel> SearchBook(string searchWord);
+        IList<BookAddModel> GetAllBooks();
         BookAddModel UpdateBookPrice(UpdateBookModel updateBookModel);
         bool DeleteBook(int bookId);
 

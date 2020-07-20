@@ -11,16 +11,11 @@ namespace BookStoreAppTestCases
     using BusinessLayer.Service;
     using CommonLayer.Model;
     using CommonLayer.ShowModel;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using Moq;
     using RepositoryLayer.Interface;
     using RepositoryLayer.Service;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Threading;
     using Xunit;
 
     /// <summary>
@@ -77,12 +72,73 @@ namespace BookStoreAppTestCases
         }
 
         [Fact]
-        public async System.Threading.Tasks.Task GetAllBooksAsync()
+        public void Get_All_Books()
         {
             string searchWord = null;
-            var response =await bookController.SearchBook(searchWord) as OkObjectResult;
+            var response = bookController.SearchBook(searchWord) as OkObjectResult;
             var items=Assert.IsType<List<BookAddModel>>(response.Value);
             Assert.Equal(3, items.Count);
+        }
+
+        [Fact]
+        public void Search_Books()
+        {
+            string searchWord = "asp";
+            var response = bookController.SearchBook(searchWord) as OkObjectResult;
+            var items = Assert.IsType<List<BookAddModel>>(response.Value);
+            Assert.Equal(3, items.Count);
+        } 
+
+        [Fact]
+        public void Update_Book_By_Price_Return_OkResult()
+        {
+            var data = new UpdateBookModel()
+            {
+                BookId = 9,
+                Price = 240
+            };
+            var response = bookController.UpdateBookPrice(data);
+            Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void Update_Book_By_Price_BookId_LessThan_Zero_Return_BadObjectResult()
+        {
+            var data = new UpdateBookModel()
+            {
+                BookId = -9,
+                Price = 240
+            };
+            var response = bookController.UpdateBookPrice(data);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
+        public void Update_Book_By_Price_Price_LessThan_Zero_Return_BadObjectResult()
+        {
+            var data = new UpdateBookModel()
+            {
+                BookId = 13,
+                Price = 0
+            };
+            var response = bookController.UpdateBookPrice(data);
+            Assert.IsType<BadRequestObjectResult>(response);
+        }
+
+        [Fact]
+        public void Book_Book_ById_Return_OkObjectResult()
+        {
+            int bookId = 25;
+            var response = bookController.DeleteBook(bookId);
+            Assert.IsType<OkObjectResult>(response);
+        }
+
+        [Fact]
+        public void Book_Book_ById_LessThan_Zero_Return_BadObjectResult()
+        {
+            int bookId = -7;
+            var response = bookController.DeleteBook(bookId);
+            Assert.IsType<BadRequestObjectResult>(response);
         }
     }
 }

@@ -63,13 +63,13 @@ namespace BookStoreApp.Controllers
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public async Task<IActionResult> SearchBook([FromQuery]string searchWord)
+        public IActionResult SearchBook([FromQuery]string searchWord)
         {
             try
             {
                 if (searchWord != null)
                 {
-                    var data = await this.bookBL.SearchBook(searchWord);
+                    var data = this.bookBL.SearchBook(searchWord);
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "Search Books", data });
@@ -81,7 +81,7 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    var data = await this.bookBL.GetAllBooks();
+                    var data = this.bookBL.GetAllBooks();
                     if (data.Count != 0)
                     {
                         return this.Ok(new { status = "True", message = "All Books", data });
@@ -98,14 +98,14 @@ namespace BookStoreApp.Controllers
             }
         }
 
+        [Authorize(Roles="admin")]
         [HttpPut]
         [Route("")]
         public IActionResult UpdateBookPrice(UpdateBookModel updateBookModel)
         {
             try
             {
-                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
-                if (claim == "admin")
+                if (updateBookModel.BookId > 0 && updateBookModel.Price > 0)
                 {
                     var data = this.bookBL.UpdateBookPrice(updateBookModel);
                     if (data != null)
@@ -119,9 +119,8 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Update Book" });
-                }
-
+                    return this.BadRequest(new { status = "false", message = "Book Id Must Be Greater Than 0" });
+                }   
             }
             catch (Exception exception)
             {
@@ -129,15 +128,15 @@ namespace BookStoreApp.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         [Route("{bookId}")]
         public IActionResult DeleteBook(int bookId)
         {
             try
             {
-                var claim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserRole").Value;
-                if (claim == "admin")
-                {
+                if (bookId > 0)
+                { 
                     var data = this.bookBL.DeleteBook(bookId);
                     if (data == true)
                     {
@@ -150,7 +149,7 @@ namespace BookStoreApp.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(new { status = "False", message = "Sorry, You Are Not Able To Update Book" });
+                    return this.BadRequest(new { status = "False", message = "Book id Must Be Greter Than 0" });
                 }
 
             }

@@ -86,7 +86,7 @@ namespace RepositoryLayer.Service
         /// </summary>
         /// <param name="searchWord"></param>
         /// <returns></returns>
-        public async Task<IList<BookAddModel>> SearchBook(string searchWord)
+        public IList<BookAddModel> SearchBook(string searchWord)
         {
             try
             {
@@ -94,9 +94,9 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@SearchTitle", searchWord));
               
-                DataTable table =  await databaseConnection.StoredProcedureExecuteReaderAsync("SearchBookByTitle", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("SearchBookByTitle", paramList);
                 var bookData = new BookAddModel();
-                List<BookAddModel> bookList = new List<BookAddModel>();
+                IList<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
                 {
                     bookData = new BookAddModel();
@@ -132,14 +132,14 @@ namespace RepositoryLayer.Service
         /// get all books 
         /// </summary>
         /// <returns></returns>
-        public async Task<IList<BookAddModel>> GetAllBooks()
+        public IList<BookAddModel> GetAllBooks()
         {
             try
             {
                 DatabaseConnection databaseConnection = new DatabaseConnection(this.configuration);
                 IList<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
 
-                DataTable table = await databaseConnection.StoredProcedureExecuteReaderAsync("GetAllBooks", paramList);
+                DataTable table = databaseConnection.StoredProcedureExecuteReader("GetAllBooks", paramList);
                 var bookData = new BookAddModel();
                 IList<BookAddModel> bookList = new List<BookAddModel>();
                 foreach (DataRow dataRow in table.Rows)
