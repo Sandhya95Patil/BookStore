@@ -39,7 +39,6 @@ namespace RepositoryLayer.Service
                 List<StoredProcedureParameterData> paramList = new List<StoredProcedureParameterData>();
                 paramList.Add(new StoredProcedureParameterData("@UserId", userId));
                 paramList.Add(new StoredProcedureParameterData("@CartId", showPurchaseModel.CartId));
-                paramList.Add(new StoredProcedureParameterData("@BookId", showPurchaseModel.BookId));
                 paramList.Add(new StoredProcedureParameterData("@IsUsed", true));
                 paramList.Add(new StoredProcedureParameterData("@Address", showPurchaseModel.Address));
                 paramList.Add(new StoredProcedureParameterData("@CreatedDate", DateTime.Now));

@@ -12,9 +12,6 @@ namespace CommonLayer.ShowModel
         [Required]
         [Range(1, Int32.MaxValue, ErrorMessage ="Cart Id must be Greater Than 0")]
         public int CartId { get; set; }
-        [Required]
-        [Range(1, Int32.MaxValue, ErrorMessage = "Book Id must be Greater Than 0")]
-        public int BookId { get; set; }
 
         [Required]
         public string Address { get; set; }
